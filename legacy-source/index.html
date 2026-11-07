@@ -1,0 +1,965 @@
+     <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#060A12">
+<title>Arena Elite — NEO GAMING TOURNAMENTS & ENTERPRISE ADMIN</title>
+<meta name="description" content="Discover competitive tournaments, build your team, track every match, and compete for the top spot.">
+<link rel="stylesheet" href="css/01-tokens-base.css">
+<link rel="stylesheet" href="css/02-buttons-badges.css">
+<link rel="stylesheet" href="css/03-nav-hero.css">
+<link rel="stylesheet" href="css/04-cards-tables.css">
+<link rel="stylesheet" href="css/05-admin-portal.css">
+<link rel="stylesheet" href="css/06-premium-overrides.css">
+</head>
+<body>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ============================= NAV ============================= -->
+<header class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="#" class="brand" data-view-link="home">
+      <div class="brand-mark"><span>AE</span></div>
+      <div class="brand-word">ARENA <b>ELITE</b></div>
+    </a>
+    <nav class="navlinks" id="navLinks">
+      <a href="#" class="navlink" data-view-link="home">Home</a>
+      <a href="#" class="navlink" data-view-link="discovery">Tournaments</a>
+      <a href="#" class="navlink" data-view-link="matches">Matches</a>
+      <a href="#" class="navlink" data-view-link="leaderboard">Leaderboards</a>
+      <a href="#" class="navlink" data-view-link="teams">Teams</a>
+      <a href="#" class="navlink" data-view-link="player">Players</a>
+      <a href="#" class="navlink" data-view-link="community">Community</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="notifBtn" aria-label="Notifications"><i data-lucide="bell" class="icon"></i><span class="dot-badge" id="notifDot"></span></button>
+      <a class="avatar-btn" id="avatarBtn" href="profile.html" title="Profile" aria-label="Open profile">SB</a>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><i data-lucide="menu" class="icon"></i></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-scrim" id="mobileScrim"></div>
+<div class="mobile-panel" id="mobilePanel">
+  <div class="mp-head">
+    <div class="brand"><div class="brand-mark"><span>AE</span></div><div class="brand-word">ARENA <b>ELITE</b></div></div>
+    <button class="icon-btn" id="closeMobilePanel"><i data-lucide="x" class="icon"></i></button>
+  </div>
+  <a href="#" class="navlink" data-view-link="home">Home</a>
+  <a href="#" class="navlink" data-view-link="discovery">Tournaments</a>
+  <a href="#" class="navlink" data-view-link="matches">Matches</a>
+  <a href="#" class="navlink" data-view-link="leaderboard">Leaderboards</a>
+  <a href="#" class="navlink" data-view-link="teams">Teams</a>
+  <a href="#" class="navlink" data-view-link="player">Players</a>
+  <a href="#" class="navlink" data-view-link="community">Community</a>
+  <a href="#" class="navlink" data-view-link="organizer">Organizer Dashboard</a>
+</div>
+
+<!-- ============================= PUBLIC & ADMIN VIEWS ============================= -->
+<main id="app">
+
+  <!-- HOME VIEW -->
+  <section class="view active" data-view="home" id="view-home">
+    <div class="home-cinematic" aria-label="Elite Arena cinematic video">
+      <video autoplay muted loop playsinline preload="auto" aria-hidden="true">
+        <source src="evelyn.3840x2160.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <div class="home-dashboard">
+      <section class="home-welcome">
+        <div>
+          <h1>Welcome back, Operative.</h1>
+          <p>Here's what's happening in the arena today.</p>
+        </div>
+        <div class="home-actions">
+          <a class="btn btn-primary" href="#" data-view-link="discovery">Browse Tournaments</a>
+          <a class="btn btn-secondary" href="#" data-view-link="teams">View My Team</a>
+        </div>
+      </section>
+
+      <section class="home-stats" aria-label="Player statistics">
+        <div class="home-stat-card"><div class="home-stat-value">#1,284</div><div class="home-stat-label">Global Rank</div></div>
+        <div class="home-stat-card"><div class="home-stat-value">62%</div><div class="home-stat-label">Win Rate</div></div>
+        <div class="home-stat-card"><div class="home-stat-value">347</div><div class="home-stat-label">Matches Played</div></div>
+        <div class="home-stat-card"><div class="home-stat-value">W5</div><div class="home-stat-label">Current Streak</div></div>
+      </section>
+
+      <section class="home-section">
+        <div class="home-section-head">
+          <div>
+            <h2>Upcoming Tournaments</h2>
+            <p>Find your next challenge and compete for the top spot.</p>
+          </div>
+          <a href="#" data-view-link="discovery">View all</a>
+        </div>
+        <div class="chip-row home-filters" id="homeFilterChips" aria-label="Filter tournaments">
+          <button class="chip active" data-status="all">All</button>
+          <button class="chip" data-status="live">Live</button>
+          <button class="chip" data-status="open">Registration open</button>
+          <button class="chip" data-status="upcoming">Upcoming</button>
+          <button class="chip" data-status="finished">Finished</button>
+        </div>
+        <div class="grid-cards" id="homeTournamentGrid"></div>
+      </section>
+
+      <section class="home-lower-grid">
+        <div class="home-panel">
+          <h3>Nightfall Vanguard</h3>
+          <div class="home-roster-row"><span class="home-avatar">JK</span><div><div class="home-roster-name">Jae Kim</div><div class="home-roster-role">In-Game Leader</div></div></div>
+          <div class="home-roster-row"><span class="home-avatar">MR</span><div><div class="home-roster-name">Mara Reyes</div><div class="home-roster-role">Entry Fragger</div></div></div>
+          <div class="home-roster-row"><span class="home-avatar">DT</span><div><div class="home-roster-name">Dev Thakur</div><div class="home-roster-role">Support</div></div></div>
+          <div class="home-roster-row"><span class="home-avatar">SL</span><div><div class="home-roster-name">Sasha Lin</div><div class="home-roster-role">Sniper</div></div></div>
+          <a class="btn btn-secondary home-panel-action" href="#" data-view-link="teams">Manage Team</a>
+        </div>
+
+        <div class="home-panel">
+          <h3>Latest Announcements</h3>
+          <div class="home-announcement">
+            <span class="home-announcement-dot"></span>
+            <div><p class="home-announcement-title">Season 7 Ranked Reset</p><div class="home-announcement-time">2 hours ago</div><p class="home-announcement-text">Ranks reset at the start of next week — placement matches unlock Monday.</p></div>
+          </div>
+          <div class="home-announcement">
+            <span class="home-announcement-dot blue"></span>
+            <div><p class="home-announcement-title">Vanguard Cup Registration Open</p><div class="home-announcement-time">1 day ago</div><p class="home-announcement-text">Sign your squad up before the bracket locks Friday.</p></div>
+          </div>
+          <div class="home-announcement">
+            <span class="home-announcement-dot red"></span>
+            <div><p class="home-announcement-title">Scheduled Maintenance</p><div class="home-announcement-time">2 days ago</div><p class="home-announcement-text">Servers will be briefly offline overnight for a platform update.</p></div>
+          </div>
+          <a class="btn btn-secondary home-panel-action" href="#" data-view-link="community">View All Announcements</a>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- DISCOVERY VIEW -->
+  <section class="view" data-view="discovery" id="view-discovery">
+    <div class="section" style="padding-top:132px">
+      <div class="container">
+        <div class="section-head"><div><h2>Tournament discovery</h2><p>Filter by game, format, entry cost, and skill level to find your next event.</p></div></div>
+        <div class="discovery-layout">
+          <aside class="filter-panel">
+            <div class="filter-group"><h5>Game</h5><select class="field-select" id="fGame"><option value="all">All games</option><option>Valorant</option><option>Free Fire</option><option>PUBG</option><option>FIFA</option><option>CS2</option><option>Mobile Legends</option></select></div>
+            <div class="filter-group"><h5>Platform</h5><select class="field-select" id="fPlatform"><option value="all">All platforms</option><option>PC</option><option>Mobile</option><option>Console</option></select></div>
+            <div class="filter-group"><h5>Tournament type</h5><select class="field-select" id="fType"><option value="all">All types</option><option>Single Elimination</option><option>Double Elimination</option><option>League Format</option><option>Round Robin</option></select></div>
+            <div class="filter-group"><h5>Location</h5><select class="field-select" id="fLocation"><option value="all">All locations</option><option>Online</option><option>LAN</option></select></div>
+            <div class="filter-group"><h5>Entry fee</h5><label class="checkline"><input type="checkbox" class="fEntry" value="free"> Free entry</label><label class="checkline"><input type="checkbox" class="fEntry" value="paid"> Paid entry</label></div>
+            <div class="filter-group"><h5>Status</h5><select class="field-select" id="fStatus"><option value="all">Any status</option><option value="live">Live</option><option value="open">Registration open</option><option value="upcoming">Upcoming</option><option value="finished">Finished</option></select></div>
+            <button class="btn btn-ghost btn-block" id="clearFiltersBtn">Clear all filters</button>
+          </aside>
+          <div>
+            <div class="search-bar"><i data-lucide="search" class="icon"></i><input type="text" id="discoverySearch" placeholder="Search tournaments..."></div>
+            <p class="results-count" id="discoveryCount" style="color:var(--text-faint);margin-bottom:18px"></p>
+            <div class="grid-cards" id="discoveryGrid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOURNAMENT DETAIL VIEW -->
+  <section class="view" data-view="tournament" id="view-tournament">
+    <div class="section" style="padding-top:132px">
+      <div class="container">
+        <div class="t-header" id="tHeaderBox"></div>
+        <div class="tabbar" id="tTabs">
+          <button class="tabbtn active" data-ttab="overview">Overview</button>
+          <button class="tabbtn" data-ttab="schedule">Schedule</button>
+          <button class="tabbtn" data-ttab="bracket">Bracket</button>
+          <button class="tabbtn" data-ttab="teams">Teams</button>
+          <button class="tabbtn" data-ttab="matches">Matches</button>
+          <button class="tabbtn" data-ttab="leaderboard">Leaderboard</button>
+          <button class="tabbtn" data-ttab="rules">Rules</button>
+          <button class="tabbtn" data-ttab="prizes">Prizes</button>
+        </div>
+        <div class="tabpanel active" data-tpanel="overview" id="tp-overview"></div>
+        <div class="tabpanel" data-tpanel="schedule" id="tp-schedule"></div>
+        <div class="tabpanel" data-tpanel="bracket" id="tp-bracket"></div>
+        <div class="tabpanel" data-tpanel="teams" id="tp-teams"></div>
+        <div class="tabpanel" data-tpanel="matches" id="tp-matches"></div>
+        <div class="tabpanel" data-tpanel="leaderboard" id="tp-leaderboard"></div>
+        <div class="tabpanel" data-tpanel="rules" id="tp-rules"></div>
+        <div class="tabpanel" data-tpanel="prizes" id="tp-prizes"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAMS VIEW -->
+  <section class="view" data-view="teams" id="view-teams">
+    <div class="section" style="padding-top:132px">
+      <div class="container">
+        <div class="section-head"><div><h2>Team management</h2><p>Build your roster, assign roles and track your team's competitive record.</p></div></div>
+        <div class="team-hero">
+          <div class="team-hero-top" style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+            <div style="display:flex;gap:16px;align-items:center">
+              <div class="team-crest" id="teamCrest">ST</div>
+              <div><h3 style="font-size:22px" id="teamNameDisplay">Shadow Titans</h3><p style="color:var(--text-faint);font-size:13px">Valorant · North Region</p></div>
+            </div>
+            <div style="display:flex;gap:10px">
+              <button class="btn btn-secondary" id="uploadLogoBtn"><i data-lucide="image-up"></i><span>Upload logo</span></button>
+              <input type="file" id="logoFileInput" accept="image/*" style="display:none">
+              <button class="btn btn-primary" id="inviteMemberBtn"><i data-lucide="user-plus"></i><span>Invite member</span></button>
+            </div>
+          </div>
+          <div class="team-stats-row">
+            <div class="team-stat-box"><b>86</b><span>Matches</span></div>
+            <div class="team-stat-box"><b>58</b><span>Wins</span></div>
+            <div class="team-stat-box"><b>28</b><span>Losses</span></div>
+            <div class="team-stat-box"><b>67%</b><span>Win rate</span></div>
+            <div class="team-stat-box"><b>#2</b><span>Global rank</span></div>
+          </div>
+        </div>
+        <div class="section-head" style="margin-bottom:18px"><div><h2 style="font-size:20px">Roster</h2></div><button class="btn btn-secondary btn-sm" id="addPlayerBtn"><i data-lucide="user-round-plus"></i><span>Add player</span></button></div>
+        <div class="roster-list" id="rosterList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATCHES VIEW -->
+  <section class="view" data-view="matches" id="view-matches">
+    <div class="section" style="padding-top:132px">
+      <div class="container">
+        <div class="section-head">
+          <div><h2>Match schedule</h2><p>Every fixture across the platform, organized by day.</p></div>
+          <div class="chip-row" id="matchFilterChips">
+            <button class="chip active" data-range="today">Today</button>
+            <button class="chip" data-range="tomorrow">Tomorrow</button>
+            <button class="chip" data-range="week">This week</button>
+            <button class="chip" data-range="completed">Completed</button>
+          </div>
+        </div>
+        <div id="matchScheduleList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE MATCH CENTER VIEW -->
+  <section class="view" data-view="live" id="view-live">
+    <div class="section" style="padding-top:132px">
+      <div class="container">
+        <div class="section-head"><div><h2>Live match center</h2><p>Shadow Titans vs Phoenix Squad · Valorant Champions Cup</p></div></div>
+        <div class="live-board">
+          <div class="live-topline" style="margin-bottom:20px"><span class="badge badge-live"><span class="bdot"></span>Live Stream</span></div>
+          <div class="score-row">
+            <div class="score-team"><div class="t-emblem">ST</div><div class="score-team-name">Shadow Titans</div></div>
+            <div>
+              <div style="display:flex;align-items:center"><span class="score-num" id="liveScoreA">13</span><span class="score-mid" style="font-size:30px;margin:0 10px;color:var(--text-faint)">—</span><span class="score-num" id="liveScoreB">10</span></div>
+              <div style="font-size:13px;color:var(--text-faint);margin-top:6px">Round 24 of 30 · Bo3</div>
+            </div>
+            <div class="score-team"><div class="t-emblem">PS</div><div class="score-team-name">Phoenix Squad</div></div>
+          </div>
+          <div style="display:flex;justify-content:center;gap:34px;margin-top:24px;flex-wrap:wrap">
+            <div><span style="font-size:11px;color:var(--text-faint)">Timer</span><b id="liveTimer" style="display:block">18:42</b></div>
+            <div><span style="font-size:11px;color:var(--text-faint)">Map</span><b style="display:block">Ascension</b></div>
+            <div><span style="font-size:11px;color:var(--text-faint)">Spectators</span><b id="liveViewers" style="display:block">4,218</b></div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1.1fr .9fr;gap:22px;margin-top:26px">
+          <div class="panel"><h4>Live events &amp; commentary</h4><div class="event-feed" id="liveEventFeed" style="margin-top:14px"></div></div>
+          <div class="panel"><h4>Player statistics</h4><table class="stat-table" style="margin-top:14px"><thead><tr><th>Player</th><th>K</th><th>D</th><th>A</th><th>Rating</th></tr></thead><tbody id="liveStatTable"></tbody></table></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEADERBOARD VIEW -->
+  <section class="view" data-view="leaderboard" id="view-leaderboard">
+    <div class="section" style="padding-top:132px">
+      <div class="container">
+        <div class="section-head"><div><h2>Leaderboards</h2><p>Ranked by season points across all recorded matches.</p></div></div>
+        <div class="tabbar" id="lbTabs">
+          <button class="tabbtn active" data-lbtab="global">Global</button>
+          <button class="tabbtn" data-lbtab="regional">Regional</button>
+          <button class="tabbtn" data-lbtab="game">By game</button>
+        </div>
+        <div class="lb-table-wrap"><table class="lb-table" id="fullLbTable"></table></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAYER PROFILE VIEW -->
+  <section class="view" data-view="player" id="view-player">
+    <div class="section" style="padding-top:132px">
+      <div class="container">
+        <div class="team-hero" style="display:flex;gap:24px;align-items:center;flex-wrap:wrap">
+          <div class="profile-avatar" style="width:84px;height:84px;border-radius:50%;background:var(--accent-soft);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:26px;color:var(--accent)">SB</div>
+          <div>
+            <h1 style="font-size:26px">ShadowByte</h1>
+            <p style="color:var(--text-muted);font-size:14px">Shaurya Bhardwaj · Captain, Shadow Titans</p>
+            <div style="display:flex;gap:10px;margin-top:8px"><span class="badge badge-approved">Verified Competitor</span><span class="badge badge-upcoming">Valorant Duelist</span></div>
+          </div>
+        </div>
+        <div class="team-stats-row">
+          <div class="team-stat-box"><b data-counter="124">0</b><span>Matches</span></div>
+          <div class="team-stat-box"><b data-counter="78">0</b><span>Wins</span></div>
+          <div class="team-stat-box"><b data-counter="63" data-suffix="%">0</b><span>Win rate</span></div>
+          <div class="team-stat-box"><b data-counter="240000" data-prefix="₹">0</b><span>Earnings</span></div>
+          <div class="team-stat-box"><b>#2</b><span>Ranking</span></div>
+        </div>
+        <div class="panel" style="margin-top:24px"><h4>Recent tournament history</h4><div id="playerHistory"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMUNITY VIEW -->
+  <section class="view" data-view="community" id="view-community">
+    <div class="section" style="padding-top:132px">
+      <div class="container" style="max-width:820px">
+        <div class="section-head"><div><h2>Community</h2><p>Discussions, recruitment posts and highlights from across Arena Elite.</p></div></div>
+        <div class="chip-row" id="communityFilters" style="margin-bottom:24px">
+          <button class="chip active" data-ctag="all">All</button>
+          <button class="chip" data-ctag="Discussion">Discussions</button>
+          <button class="chip" data-ctag="Announcement">Announcements</button>
+          <button class="chip" data-ctag="Recruitment">Recruitment</button>
+          <button class="chip" data-ctag="Highlight">Highlights</button>
+        </div>
+        <div id="communityFeed"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORGANIZER DASHBOARD VIEW -->
+  <section class="view" data-view="organizer" id="view-organizer">
+    <div class="section" style="padding-top:132px">
+      <div class="container">
+        <div class="section-head"><div><h2>Organizer dashboard</h2><p>Manage tournaments, registrations, results and live updates.</p></div></div>
+        <div class="org-layout">
+          <nav class="org-side" id="orgSide">
+            <a href="#" class="org-side-link active" data-org="dashboard"><i data-lucide="layout-dashboard"></i>Dashboard</a>
+            <a href="#" class="org-side-link" data-org="registrations"><i data-lucide="clipboard-list"></i>Registrations</a>
+            <a href="#" class="org-side-link" data-org="results"><i data-lucide="award"></i>Match results</a>
+            <a href="#" class="org-side-link" data-org="liveupdates"><i data-lucide="radio"></i>Live updates</a>
+            <a href="#" class="org-side-link" data-org="settings"><i data-lucide="settings"></i>Settings</a>
+          </nav>
+          <div>
+            <div class="org-panel active" data-orgpanel="dashboard" id="orgp-dashboard"></div>
+            <div class="org-panel" data-orgpanel="registrations" id="orgp-registrations" style="display:none"></div>
+            <div class="org-panel" data-orgpanel="results" id="orgp-results" style="display:none"></div>
+            <div class="org-panel" data-orgpanel="liveupdates" id="orgp-liveupdates" style="display:none"></div>
+            <div class="org-panel" data-orgpanel="settings" id="orgp-settings" style="display:none"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+   <!-- ============================= ENTERPRISE ADMIN PORTAL VIEW ============================= -->
+  <section class="view" data-view="admin" id="view-admin">
+    
+    <!-- ACCESS GATE -->
+    <div id="adminGateWrap" class="admin-gate-wrap" style="display:none">
+      <div class="admin-gate-card">
+        <div class="admin-gate-icon"><i data-lucide="shield-alert" style="width:32px;height:32px"></i></div>
+        <div style="text-align:center">
+          <span class="badge badge-high" style="margin-bottom:10px">RESTRICTED ACCESS · LEVEL 4</span>
+          <h2 style="font-size:24px;margin-top:6px">Admin Control Center</h2>
+          <p style="color:var(--text-muted);font-size:14px;margin-top:6px">Administrative access for tournament directors, referees, and platform operators.</p>
+        </div>
+        <div class="admin-gate-demo-box">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <b style="color:var(--accent)"><i data-lucide="key" style="width:14px;height:14px;display:inline;vertical-align:middle;margin-right:4px"></i>Demo Credentials</b>
+            <button class="btn btn-secondary btn-xs" id="quickFillAdminBtn">Auto-fill</button>
+          </div>
+          <div>Username: <code>admin@arenaelite.gg</code></div>
+          <div style="margin-top:4px">Password: <code>Admin@123</code></div>
+        </div>
+        <form class="form-stack" id="adminLoginForm">
+          <div class="field"><label>Admin Email or Username</label><input class="field-input" id="adminGateEmail" type="email" required placeholder="admin@arenaelite.gg"></div>
+          <div class="field"><label>Password</label><input class="field-input" id="adminGatePass" type="password" required placeholder="••••••••"></div>
+          <button class="btn btn-primary btn-block" type="submit" style="margin-top:8px"><i data-lucide="unlock"></i><span>Authenticate &amp; Enter Portal</span></button>
+          <a class="btn btn-ghost btn-block" href="login.html"><i data-lucide="arrow-left"></i><span>Back to Public Arena</span></a>
+        </form>
+        <div class="auth-providers" aria-label="Admin account providers">
+          <button class="auth-provider" type="button" data-admin-provider="Google">Google Admin</button>
+          <button class="auth-provider" type="button" data-admin-provider="Apple">Apple Admin</button>
+          <button class="auth-provider" type="button" data-admin-provider="Microsoft">Microsoft Admin</button>
+        </div>
+        <p style="color:var(--text-faint);font-size:11px;text-align:center;margin-top:9px">Demo provider access. Production admin OAuth must validate the account on a server.</p>
+      </div>
+    </div>
+
+    <!-- AUTHENTICATED PORTAL -->
+    <div id="adminPortalWrap" style="display:none">
+      <div class="admin-header-bar">
+        <div style="display:flex;align-items:center;gap:14px">
+          <div class="brand-mark" style="width:30px;height:30px"><span style="font-size:12px">AE</span></div>
+          <div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-family:var(--font-display);font-weight:700;font-size:16px">ARENA ELITE</span>
+              <span class="badge badge-admin-role">Super Administrator</span>
+            </div>
+            <div style="font-size:11px;color:var(--text-faint);letter-spacing:.05em">ADMIN CONTROL CENTER · v2.6</div>
+          </div>
+        </div>
+
+        <div class="admin-search-wrap">
+          <i data-lucide="search"></i>
+          <input type="text" id="adminGlobalSearch" placeholder="Quick search players, teams, tournaments, matches, reports..." autocomplete="off">
+          <div class="admin-search-dropdown" id="adminSearchDropdown"></div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:12px">
+          <span class="badge badge-live" style="font-size:11px;padding:3px 8px"><span class="bdot"></span>Cluster OK (14ms)</span>
+          <button class="icon-btn" id="adminNotifTrigger" title="Admin Notifications"><i data-lucide="bell" class="icon"></i><span class="dot-badge" id="adminNotifDot"></span></button>
+          <div class="admin-profile-chip">
+            <div class="admin-chip-avatar">AV</div>
+            <div class="admin-chip-info"><div class="admin-chip-name" style="font-size:12px;font-weight:700">Alex Vance</div><div style="font-size:10px;color:var(--accent);font-weight:700">SuperAdmin</div></div>
+          </div>
+          <button class="btn btn-ghost btn-sm" data-view-link="home" title="Public site"><i data-lucide="globe"></i><span>Public Site</span></button>
+          <button class="btn btn-danger-line btn-sm" id="adminLogoutBtn" title="Sign out"><i data-lucide="log-out"></i><span>Logout</span></button>
+        </div>
+      </div>
+
+      <div class="admin-workspace">
+        <aside class="admin-side" id="adminSideNav">
+          <a href="#" class="admin-side-item active" data-adminpanel="dashboard"><div class="left"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></div></a>
+          <a href="#" class="admin-side-item" data-adminpanel="players"><div class="left"><i data-lucide="users"></i><span>Players</span></div><span class="admin-badge-count" id="badgePlayerCount">7</span></a>
+          <a href="#" class="admin-side-item" data-adminpanel="teams"><div class="left"><i data-lucide="shield"></i><span>Teams</span></div><span class="admin-badge-count" id="badgeTeamCount">8</span></a>
+          <a href="#" class="admin-side-item" data-adminpanel="tournaments"><div class="left"><i data-lucide="trophy"></i><span>Tournaments</span></div><span class="admin-badge-count" id="badgeTourneyCount">6</span></a>
+          <a href="#" class="admin-side-item" data-adminpanel="registrations"><div class="left"><i data-lucide="clipboard-list"></i><span>Registrations</span></div><span class="admin-badge-count danger" id="badgePendingRegs">2</span></a>
+          <a href="#" class="admin-side-item" data-adminpanel="matches"><div class="left"><i data-lucide="swords"></i><span>Matches</span></div><span class="admin-badge-count" id="badgeLiveMatches">1</span></a>
+          <a href="#" class="admin-side-item" data-adminpanel="leaderboard"><div class="left"><i data-lucide="award"></i><span>Leaderboard</span></div></a>
+          <a href="#" class="admin-side-item" data-adminpanel="community"><div class="left"><i data-lucide="message-square"></i><span>Community Moderation</span></div></a>
+          <a href="#" class="admin-side-item" data-adminpanel="reports"><div class="left"><i data-lucide="alert-octagon"></i><span>Reports &amp; Safety</span></div><span class="admin-badge-count danger" id="badgeReportsCount">3</span></a>
+          <a href="#" class="admin-side-item" data-adminpanel="announcements"><div class="left"><i data-lucide="megaphone"></i><span>Announcements</span></div></a>
+          <a href="#" class="admin-side-item" data-adminpanel="analytics"><div class="left"><i data-lucide="bar-chart-2"></i><span>Analytics</span></div></a>
+          <a href="#" class="admin-side-item" data-adminpanel="audit"><div class="left"><i data-lucide="history"></i><span>Audit Logs</span></div></a>
+          <a href="#" class="admin-side-item" data-adminpanel="settings"><div class="left"><i data-lucide="settings"></i><span>Settings</span></div></a>
+        </aside>
+
+        <section class="admin-content" id="adminContentArea">
+          
+          <!-- 1. DASHBOARD -->
+          <div class="admin-panel" id="adminp-dashboard">
+            <div class="section-head" style="margin-bottom:24px">
+              <div><h2>Admin Control Center</h2><p>Monitor and manage the Arena Elite competitive ecosystem.</p></div>
+              <div style="display:flex;gap:10px">
+                <button class="btn btn-secondary btn-sm" id="adminSyncDataBtn"><i data-lucide="refresh-cw"></i><span>Sync Telemetry</span></button>
+                <button class="btn btn-primary btn-sm" id="adminQuickCreateTourneyBtn"><i data-lucide="plus-circle"></i><span>Create Tournament</span></button>
+              </div>
+            </div>
+            <div class="admin-stat-grid">
+              <div class="admin-stat-card"><div class="top"><span>Total Players</span><i data-lucide="users"></i></div><div class="val" id="astat-players">18,400</div><div class="sub"><span class="diff-up">+5.4%</span> active</div></div>
+              <div class="admin-stat-card"><div class="top"><span>Active Players</span><i data-lucide="user-check"></i></div><div class="val" id="astat-active-players">12,840</div><div class="sub">Engagement 69.8%</div></div>
+              <div class="admin-stat-card"><div class="top"><span>Total Teams</span><i data-lucide="shield"></i></div><div class="val" id="astat-teams">2,760</div><div class="sub">Verified rosters</div></div>
+              <div class="admin-stat-card"><div class="top"><span>Tournaments</span><i data-lucide="trophy"></i></div><div class="val" id="astat-tournaments">6</div><div class="sub"><span id="astat-active-tourneys">3</span> active/open</div></div>
+              <div class="admin-stat-card"><div class="top"><span>Live Matches</span><i data-lucide="swords"></i></div><div class="val" id="astat-live-matches" style="color:var(--success)">1</div><div class="sub">Real-time lobbies</div></div>
+              <div class="admin-stat-card"><div class="top"><span>Pending Regs</span><i data-lucide="clipboard-list"></i></div><div class="val" id="astat-pending-regs" style="color:var(--warning)">2</div><div class="sub">Needs organizer review</div></div>
+              <div class="admin-stat-card"><div class="top"><span>Reported Content</span><i data-lucide="alert-triangle"></i></div><div class="val" id="astat-reports" style="color:var(--danger)">3</div><div class="sub">Safety tickets</div></div>
+              <div class="admin-stat-card"><div class="top"><span>Prize Distributed</span><i data-lucide="wallet"></i></div><div class="val" style="color:var(--accent)">₹41L+</div><div class="sub">100% fulfilled</div></div>
+            </div>
+
+            <div class="panel" style="margin-bottom:28px">
+              <h4 style="margin-bottom:14px"><i data-lucide="zap" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;color:var(--accent)"></i>Operator Quick Actions</h4>
+              <div class="admin-quick-grid">
+                <button class="admin-quick-btn" id="qaCreateTourney"><i data-lucide="trophy"></i><span>Create Tournament</span></button>
+                <button class="admin-quick-btn" id="qaManagePlayers"><i data-lucide="users"></i><span>Manage Players</span></button>
+                <button class="admin-quick-btn" id="qaReviewRegs"><i data-lucide="clipboard-check"></i><span>Review Registrations</span></button>
+                <button class="admin-quick-btn" id="qaPublishAnnounce"><i data-lucide="megaphone"></i><span>Publish Announcement</span></button>
+                <button class="admin-quick-btn" id="qaReviewReports"><i data-lucide="alert-octagon"></i><span>Review Reports</span></button>
+                <button class="admin-quick-btn" id="qaUpdateResults"><i data-lucide="award"></i><span>Update Match Result</span></button>
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:22px">
+              <div class="panel">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><h4>Live Tournament Pipeline</h4><button class="btn btn-ghost btn-sm" id="dashViewAllTourneysBtn">View All</button></div>
+                <div class="table-wrap"><table class="data-table"><thead><tr><th>Tournament</th><th>Game</th><th>Format</th><th>Status</th><th>Action</th></tr></thead><tbody id="dashLiveTourneyBody"></tbody></table></div>
+              </div>
+              <div class="panel">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><h4>Real-time Audit Stream</h4><button class="btn btn-ghost btn-sm" id="dashViewAllAuditBtn">Audit Log</button></div>
+                <div class="event-feed" id="dashAuditStream"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. PLAYERS -->
+          <div class="admin-panel" id="adminp-players" style="display:none">
+            <div class="section-head" style="margin-bottom:20px">
+              <div><h2>Player Management</h2><p>Inspect competitor telemetry, verification credentials, and disciplinary sanctions.</p></div>
+              <button class="btn btn-primary btn-sm" id="adminCreatePlayerBtn"><i data-lucide="user-plus"></i><span>Add New Player</span></button>
+            </div>
+            <div class="admin-filter-bar">
+              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                <input type="text" class="admin-search-input" id="adminPlayerSearch" placeholder="Search players by name, username, team...">
+                <div class="chip-row" id="adminPlayerStatusChips">
+                  <button class="chip active" data-apfilter="all">All</button>
+                  <button class="chip" data-apfilter="Active">Active</button>
+                  <button class="chip" data-apfilter="Suspended">Suspended</button>
+                  <button class="chip" data-apfilter="Verified">Verified</button>
+                </div>
+              </div>
+              <span class="results-count" id="adminPlayerCountLabel" style="margin:0"></span>
+            </div>
+            <div class="table-wrap"><table class="data-table"><thead><tr><th>Player</th><th>Username</th><th>Email</th><th>Team</th><th>Game</th><th>Matches</th><th>Wins</th><th>Status</th><th>Joined</th><th>Actions</th></tr></thead><tbody id="adminPlayerTableBody"></tbody></table></div>
+          </div>
+
+          <!-- 3. TEAMS -->
+          <div class="admin-panel" id="adminp-teams" style="display:none">
+            <div class="section-head" style="margin-bottom:20px">
+              <div><h2>Team Management</h2><p>Review competitive rosters, primary game disciplines, captains, and sanctions.</p></div>
+              <button class="btn btn-primary btn-sm" id="adminCreateTeamBtn"><i data-lucide="shield-plus"></i><span>Register Team</span></button>
+            </div>
+            <div class="admin-filter-bar">
+              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                <input type="text" class="admin-search-input" id="adminTeamSearch" placeholder="Search teams by name or captain...">
+                <select class="field-select" id="adminTeamGameFilter" style="width:160px"><option value="all">All Games</option><option>Valorant</option><option>CS2</option><option>PUBG</option><option>FIFA</option><option>Free Fire</option></select>
+                <div class="chip-row" id="adminTeamStatusChips">
+                  <button class="chip active" data-atfilter="all">All</button>
+                  <button class="chip" data-atfilter="Active">Active</button>
+                  <button class="chip" data-atfilter="Suspended">Suspended</button>
+                </div>
+              </div>
+              <span class="results-count" id="adminTeamCountLabel" style="margin:0"></span>
+            </div>
+            <div class="table-wrap"><table class="data-table"><thead><tr><th>Team</th><th>Captain</th><th>Game</th><th>Members</th><th>Tournaments</th><th>Wins</th><th>Ranking</th><th>Status</th><th>Actions</th></tr></thead><tbody id="adminTeamTableBody"></tbody></table></div>
+          </div>
+
+          <!-- 4. TOURNAMENTS -->
+          <div class="admin-panel" id="adminp-tournaments" style="display:none">
+            <div class="section-head" style="margin-bottom:20px">
+              <div><h2>Tournament Management</h2><p>Oversee all tournaments, adjust prize pools, configure format, or cancel brackets.</p></div>
+              <button class="btn btn-primary btn-sm" id="adminTourneyCreateBtn"><i data-lucide="plus-circle"></i><span>+ Create Tournament</span></button>
+            </div>
+            <div class="admin-filter-bar">
+              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                <input type="text" class="admin-search-input" id="adminTourneySearch" placeholder="Search tournaments...">
+                <div class="chip-row" id="adminTourneyStatusChips">
+                  <button class="chip active" data-tfilter="all">All</button>
+                  <button class="chip" data-tfilter="live">Live</button>
+                  <button class="chip" data-tfilter="open">Registration Open</button>
+                  <button class="chip" data-tfilter="upcoming">Upcoming</button>
+                  <button class="chip" data-tfilter="finished">Finished</button>
+                </div>
+              </div>
+              <span class="results-count" id="adminTourneyCountLabel" style="margin:0"></span>
+            </div>
+            <div class="table-wrap"><table class="data-table"><thead><tr><th>Tournament</th><th>Game</th><th>Organizer</th><th>Status</th><th>Teams</th><th>Prize Pool</th><th>Start Date</th><th>Actions</th></tr></thead><tbody id="adminTourneyTableBody"></tbody></table></div>
+          </div>
+
+          <!-- 5. REGISTRATIONS -->
+          <div class="admin-panel" id="adminp-registrations" style="display:none">
+            <div class="section-head" style="margin-bottom:20px"><div><h2>Registration Management</h2><p>Validate team rosters, handle eligibility checks, and approve tournament applications.</p></div></div>
+            <div class="admin-filter-bar">
+              <div class="chip-row" id="adminRegFilterChips">
+                <button class="chip active" data-rfilter="all">All</button>
+                <button class="chip" data-rfilter="pending"><span class="cdot" style="color:var(--warning)"></span>Pending</button>
+                <button class="chip" data-rfilter="approved"><span class="cdot" style="color:var(--success)"></span>Approved</button>
+                <button class="chip" data-rfilter="rejected"><span class="cdot" style="color:var(--danger)"></span>Rejected</button>
+                <button class="chip" data-rfilter="flagged"><span class="cdot" style="color:var(--danger)"></span>Flagged</button>
+              </div>
+              <span class="results-count" id="adminRegCountLabel" style="margin:0"></span>
+            </div>
+            <div class="table-wrap"><table class="data-table"><thead><tr><th>Reg ID</th><th>Team</th><th>Tournament</th><th>Captain</th><th>Game</th><th>Submitted</th><th>Status</th><th>Actions</th></tr></thead><tbody id="adminRegTableBody"></tbody></table></div>
+          </div>
+
+          <!-- 6. MATCHES -->
+          <div class="admin-panel" id="adminp-matches" style="display:none">
+            <div class="section-head" style="margin-bottom:20px"><div><h2>Match Administration</h2><p>Monitor live fixtures, assign referees, record official game scores, and delay matches.</p></div></div>
+            <div class="admin-filter-bar">
+              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                <input type="text" class="admin-search-input" id="adminMatchSearch" placeholder="Search matches by team or ID...">
+                <div class="chip-row" id="adminMatchStatusChips">
+                  <button class="chip active" data-mfilter="all">All</button>
+                  <button class="chip" data-mfilter="live">Live</button>
+                  <button class="chip" data-mfilter="upcoming">Upcoming</button>
+                  <button class="chip" data-mfilter="completed">Completed</button>
+                </div>
+              </div>
+            </div>
+            <div class="table-wrap"><table class="data-table"><thead><tr><th>Match ID</th><th>Tournament</th><th>Team A</th><th>Team B</th><th>Schedule</th><th>Score</th><th>Status</th><th>Referee</th><th>Actions</th></tr></thead><tbody id="adminMatchTableBody"></tbody></table></div>
+          </div>
+
+          <!-- 7. LEADERBOARD -->
+          <div class="admin-panel" id="adminp-leaderboard" style="display:none">
+            <div class="section-head" style="margin-bottom:20px">
+              <div><h2>Leaderboard Control Panel</h2><p>Audit points allocations, apply penalty deductions, and execute ranking recalculations.</p></div>
+              <button class="btn btn-primary btn-sm" id="adminRecalcLeaderboardBtn"><i data-lucide="calculator"></i><span>Recalculate Leaderboard</span></button>
+            </div>
+            <div class="admin-filter-bar">
+              <input type="text" class="admin-search-input" id="adminLbSearch" placeholder="Search ranked teams...">
+              <span style="font-size:12px;color:var(--text-faint)">Changes update the public leaderboard page.</span>
+            </div>
+            <div class="table-wrap"><table class="data-table"><thead><tr><th>Rank</th><th>Team</th><th>Matches</th><th>Wins</th><th>Losses</th><th>Points</th><th>Win Rate</th><th>Status</th><th>Actions</th></tr></thead><tbody id="adminLeaderboardBody"></tbody></table></div>
+          </div>
+
+          <!-- 8. COMMUNITY MODERATION -->
+          <div class="admin-panel" id="adminp-community" style="display:none">
+            <div class="section-head" style="margin-bottom:20px"><div><h2>Community Moderation</h2><p>Review player discussion threads, highlight clips, and recruitment notices for safety compliance.</p></div></div>
+            <div class="admin-filter-bar">
+              <div class="chip-row" id="adminComFilterChips">
+                <button class="chip active" data-cfilter="all">All Posts</button>
+                <button class="chip" data-cfilter="Reported">Reported</button>
+                <button class="chip" data-cfilter="Approved">Approved</button>
+                <button class="chip" data-cfilter="Hidden">Hidden</button>
+              </div>
+            </div>
+            <div id="adminCommunityFeedList"></div>
+          </div>
+
+          <!-- 9. REPORTS & SAFETY -->
+          <div class="admin-panel" id="adminp-reports" style="display:none">
+            <div class="section-head" style="margin-bottom:20px"><div><h2>Reports &amp; Safety Center</h2><p>Investigate cheating allegations, toxic behavior, score tampering, and network disruptions.</p></div></div>
+            <div class="admin-stat-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:22px">
+              <div class="admin-stat-card"><div class="top"><span>Open Reports</span><i data-lucide="alert-circle"></i></div><div class="val" id="astat-open-rep">3</div><div class="sub">Requires investigator</div></div>
+              <div class="admin-stat-card"><div class="top"><span>Critical / High</span><i data-lucide="flame"></i></div><div class="val" id="astat-crit-rep" style="color:var(--danger)">2</div><div class="sub">Priority review</div></div>
+              <div class="admin-stat-card"><div class="top"><span>Resolved Today</span><i data-lucide="check-check"></i></div><div class="val" style="color:var(--success)">5</div><div class="sub">Average SLA: 42m</div></div>
+              <div class="admin-stat-card"><div class="top"><span>Pending Review</span><i data-lucide="clock"></i></div><div class="val">1</div><div class="sub">In referee queue</div></div>
+            </div>
+            <div class="admin-filter-bar">
+              <select class="field-select" id="adminReportCatFilter" style="width:170px"><option value="all">All Categories</option><option>Cheating</option><option>Abuse</option><option>Spam</option><option>Harassment</option><option>Fake Result</option><option>Tournament Issue</option></select>
+              <div class="chip-row" id="adminReportStatusChips">
+                <button class="chip active" data-repfilter="all">All Status</button>
+                <button class="chip" data-repfilter="Open">Open</button>
+                <button class="chip" data-repfilter="In Review">In Review</button>
+                <button class="chip" data-repfilter="Resolved">Resolved</button>
+              </div>
+            </div>
+            <div class="table-wrap"><table class="data-table"><thead><tr><th>Report ID</th><th>Reporter</th><th>Target</th><th>Category</th><th>Description</th><th>Priority</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="adminReportBody"></tbody></table></div>
+          </div>
+
+          <!-- 10. ANNOUNCEMENTS -->
+          <div class="admin-panel" id="adminp-announcements" style="display:none">
+            <div class="section-head" style="margin-bottom:20px"><div><h2>Platform Announcements</h2><p>Broadcast system-wide notices, anti-cheat advisories, and schedule changes.</p></div></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start">
+              <div class="panel">
+                <h4>Create Broadcast Notice</h4>
+                <form class="form-stack" id="adminAnnounceForm" style="margin-top:14px">
+                  <div class="field"><label>Announcement Title</label><input class="field-input" id="annTitle" type="text" required placeholder="e.g. Anti-Cheat Engine Update v4.2"></div>
+                  <div class="form-grid">
+                    <div class="field"><label>Category</label><select class="field-select" id="annCategory"><option>System</option><option>Tournament</option><option>Rule Update</option><option>Maintenance</option></select></div>
+                    <div class="field"><label>Audience</label><select class="field-select" id="annAudience"><option>All Players</option><option>Organizers</option><option>Team Captains</option></select></div>
+                  </div>
+                  <div class="field"><label>Priority</label><select class="field-select" id="annPriority"><option>Normal</option><option>Important</option><option>Critical</option></select></div>
+                  <div class="field"><label>Message Content</label><textarea id="annBody" required placeholder="Write announcement details here..." style="min-height:100px"></textarea></div>
+                  <div style="display:flex;gap:10px;margin-top:6px">
+                    <button class="btn btn-primary" type="submit"><i data-lucide="send"></i><span>Publish Announcement</span></button>
+                    <button class="btn btn-secondary" type="button" id="annSaveDraftBtn"><i data-lucide="file-text"></i><span>Save Draft</span></button>
+                  </div>
+                </form>
+              </div>
+              <div class="panel"><h4>Published Announcements</h4><div id="adminAnnounceList" style="margin-top:14px;display:flex;flex-direction:column;gap:12px"></div></div>
+            </div>
+          </div>
+
+          <!-- 11. ANALYTICS -->
+          <div class="admin-panel" id="adminp-analytics" style="display:none">
+            <div class="section-head" style="margin-bottom:20px">
+              <div><h2>Ecosystem Analytics</h2><p>Real-time telemetry, engagement metrics, registration velocity, and prize distribution.</p></div>
+              <div class="chip-row" id="analyticsRangeChips">
+                <button class="chip active" data-orange="7d">7 Days</button>
+                <button class="chip" data-orange="30d">30 Days</button>
+                <button class="chip" data-orange="90d">90 Days</button>
+                <button class="chip" data-orange="season">This Season</button>
+              </div>
+            </div>
+            <div class="analytics-grid">
+              <div class="panel"><h4>1. Player Growth Velocity</h4><canvas id="cPlayerGrowth"></canvas></div>
+              <div class="panel"><h4>2. Tournament Completion</h4><canvas id="cTourneyGrowth"></canvas></div>
+              <div class="panel"><h4>3. Registration Inflow</h4><canvas id="cRegGrowth"></canvas></div>
+              <div class="panel"><h4>4. Participation by Game</h4><canvas id="cGameShare"></canvas></div>
+              <div class="panel"><h4>5. Match Activity by Stage</h4><canvas id="cMatchActivity"></canvas></div>
+              <div class="panel"><h4>6. Prize Pool Distribution (₹ Lakhs)</h4><canvas id="cPrizeDist"></canvas></div>
+              <div class="panel chart-card-full"><h4>7. Active Concurrent Users by Hour (UTC)</h4><canvas id="cUserActivity"></canvas></div>
+            </div>
+          </div>
+
+          <!-- 12. AUDIT LOGS -->
+          <div class="admin-panel" id="adminp-audit" style="display:none">
+            <div class="section-head" style="margin-bottom:20px">
+              <div><h2>Security &amp; Audit Logs</h2><p>Immutable chronological journal of administrative actions, score edits, and security decisions.</p></div>
+              <button class="btn btn-secondary btn-sm" id="adminExportAuditBtn"><i data-lucide="download"></i><span>Export Log (CSV)</span></button>
+            </div>
+            <div class="admin-filter-bar">
+              <input type="text" class="admin-search-input" id="adminAuditSearch" placeholder="Search audit trail...">
+              <select class="field-select" id="adminAuditActionFilter" style="width:160px"><option value="all">All Actions</option><option>LOGIN</option><option>CREATE</option><option>UPDATE</option><option>DELETE</option><option>APPROVE</option><option>SUSPEND</option><option>RESOLVE</option><option>ANNOUNCE</option></select>
+            </div>
+            <div class="table-wrap"><table class="data-table"><thead><tr><th>Time</th><th>Administrator</th><th>Action</th><th>Target</th><th>Details</th><th>IP / Client</th><th>Status</th></tr></thead><tbody id="adminAuditTableBody"></tbody></table></div>
+          </div>
+
+          <!-- 13. SETTINGS -->
+          <div class="admin-panel" id="adminp-settings" style="display:none">
+            <div class="section-head" style="margin-bottom:20px"><div><h2>Platform Configuration &amp; Settings</h2><p>Control global parameters, anti-cheat enforcement policies, and administrator credentials.</p></div></div>
+            <div class="settings-nav">
+              <button class="settings-nav-btn active" data-settab="general">General</button>
+              <button class="settings-nav-btn" data-settab="tournament">Tournament Rules</button>
+              <button class="settings-nav-btn" data-settab="security">Security &amp; 2FA</button>
+              <button class="settings-nav-btn" data-settab="moderation">Moderation</button>
+            </div>
+            <div class="panel" style="max-width:840px">
+              <form class="form-stack" id="adminSettingsForm">
+                <div id="setpanel-general">
+                  <h4 style="margin-bottom:14px">Platform Identity</h4>
+                  <div class="form-grid">
+                    <div class="field"><label>Organization Name</label><input class="field-input" id="cfgOrgName" value="Arena Elite Esports Federation"></div>
+                    <div class="field"><label>Support Email</label><input class="field-input" id="cfgSupportEmail" value="admin@arenaelite.gg"></div>
+                  </div>
+                </div>
+                <div id="setpanel-tournament" style="display:none">
+                  <h4 style="margin-bottom:14px">Default Rules</h4>
+                  <div class="form-grid">
+                    <div class="field"><label>Dispute Window (Minutes)</label><input class="field-input" type="number" id="cfgDisputeWindow" value="30"></div>
+                    <div class="field"><label>Min Roster Size</label><input class="field-input" type="number" id="cfgMinRoster" value="5"></div>
+                  </div>
+                </div>
+                <div id="setpanel-security" style="display:none">
+                  <h4 style="margin-bottom:14px">Security</h4>
+                  <label class="checkline"><input type="checkbox" id="cfgRequire2fa" checked> Enforce Two-Factor Authentication (2FA) for Operator and Referee roles</label>
+                  <label class="checkline"><input type="checkbox" id="cfgIpBind" checked> Restrict admin panel sessions to whitelisted IP addresses</label>
+                </div>
+                <div id="setpanel-moderation" style="display:none">
+                  <h4 style="margin-bottom:14px">Moderation &amp; Flags</h4>
+                  <label class="checkline"><input type="checkbox" id="cfgAutoFlagReports" checked> Automatically quarantine accounts with 3+ critical cheating reports</label>
+                  <label class="checkline"><input type="checkbox" id="cfgMaintMode"> <b>Maintenance Mode:</b> Temporarily restrict tournament submissions</label>
+                </div>
+                <div style="display:flex;gap:12px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+                  <button class="btn btn-primary" type="submit"><i data-lucide="check"></i><span>Save Settings</span></button>
+                  <button class="btn btn-secondary" type="button" id="adminResetSettingsBtn">Reset Defaults</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+        </section>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================= FOOTER ============================= -->
+<footer class="footer" style="border-top:1px solid var(--border);padding:64px 0 30px;background:var(--bg-1)">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:40px;padding-bottom:44px">
+      <div>
+        <div class="brand"><div class="brand-mark"><span>AE</span></div><div class="brand-word">ARENA <b>ELITE</b></div></div>
+        <p style="color:var(--text-muted);margin-top:14px;font-size:13.5px">Compete. Conquer. Become Legendary.</p>
+      </div>
+      <div>
+        <h5 style="font-size:12.5px;color:var(--text-faint);margin-bottom:15px">Platform</h5>
+        <a href="#" data-view-link="discovery" style="display:block;padding:4px 0">Tournaments</a>
+        <a href="#" data-view-link="matches" style="display:block;padding:4px 0">Matches</a>
+        <a href="#" data-view-link="leaderboard" style="display:block;padding:4px 0">Leaderboards</a>
+      </div>
+      <div>
+        <h5 style="font-size:12.5px;color:var(--text-faint);margin-bottom:15px">Enterprise</h5>
+        <a href="#" data-view-link="organizer" style="display:block;padding:4px 0">Organizer Dashboard</a>
+        <a href="#" data-view-link="admin" style="display:block;padding:4px 0;color:var(--accent);font-weight:700">Admin Control Center</a>
+      </div>
+      <div>
+        <h5 style="font-size:12.5px;color:var(--text-faint);margin-bottom:15px">Support</h5>
+        <a href="#" style="display:block;padding:4px 0">Help center</a>
+        <a href="#" style="display:block;padding:4px 0">Fair play rules</a>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:26px;border-top:1px solid var(--border);color:var(--text-faint);font-size:12.5px">
+      <p>© 2026 Arena Elite. All rights reserved.</p>
+      <div style="display:flex;gap:12px">
+        <a href="#"><i data-lucide="message-circle" class="icon"></i></a>
+        <a href="#"><i data-lucide="twitter" class="icon"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================= MODALS (PUBLIC & ADMIN) ============================= -->
+<div class="overlay" id="searchOverlay">
+  <div class="modal" style="max-width:600px">
+    <div class="search-bar" style="margin-bottom:0">
+      <i data-lucide="search" class="icon"></i>
+      <input type="text" id="globalSearchInput" placeholder="Search players, teams, tournaments, matches...">
+      <button class="icon-btn" id="closeSearchBtn"><i data-lucide="x" class="icon"></i></button>
+    </div>
+    <div id="globalSearchResults" style="margin-top:14px;max-height:50vh;overflow-y:auto;display:none"></div>
+  </div>
+</div>
+
+<div class="notif-panel" id="notifPanel">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--border)">
+    <h4>Notifications</h4><button class="btn btn-ghost btn-sm" id="markAllReadBtn">Mark all read</button>
+  </div>
+  <div id="notifList" style="max-height:60vh;overflow-y:auto"></div>
+</div>
+
+<div class="overlay" id="createOverlay">
+  <div class="modal modal-wide">
+    <button class="icon-btn modal-close" id="closeCreateBtn"><i data-lucide="x" class="icon"></i></button>
+    <h3>Create a tournament</h3>
+    <p style="color:var(--text-muted);font-size:13.5px;margin-bottom:20px">Configure your event parameters.</p>
+    <form class="form-stack" id="createTourneyForm">
+      <div class="field"><label>Tournament name</label><input class="field-input" id="ctName" type="text" required placeholder="e.g. Winter Invitational"></div>
+      <div class="form-grid">
+        <div class="field"><label>Game</label><select class="field-select" id="ctGame" required><option value="">Select a game</option><option>Valorant</option><option>Free Fire</option><option>PUBG</option><option>FIFA</option><option>CS2</option><option>Mobile Legends</option></select></div>
+        <div class="field"><label>Format</label><select class="field-select" id="ctType"><option>Single Elimination</option><option>Double Elimination</option><option>League Format</option><option>Round Robin</option></select></div>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>Prize pool (₹)</label><input class="field-input" id="ctPrize" type="number" min="0" required placeholder="500000"></div>
+        <div class="field"><label>Start date</label><input class="field-input" id="ctDate" type="date" required></div>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>Location</label><select class="field-select" id="ctLocation"><option>Online</option><option>LAN</option></select></div>
+        <div class="field"><label>Max teams</label><input class="field-input" id="ctTeams" type="number" min="2" value="32"></div>
+      </div>
+      <button class="btn btn-primary btn-block" type="submit">Publish tournament</button>
+    </form>
+  </div>
+</div>
+
+<div class="overlay" id="registerTOverlay">
+  <div class="modal">
+    <button class="icon-btn modal-close" id="closeRegisterTBtn"><i data-lucide="x" class="icon"></i></button>
+    <h3 id="registerTTitle">Register your team</h3>
+    <p id="registerTSub" style="color:var(--text-muted);font-size:13.5px;margin-bottom:20px"></p>
+    <form class="form-stack" id="registerTForm">
+      <div class="field"><label>Team</label><select class="field-select" id="rtTeam"><option>Shadow Titans</option></select></div>
+      <div class="field"><label>Contact email</label><input class="field-input" type="email" required placeholder="team@example.com"></div>
+      <button class="btn btn-primary btn-block" type="submit">Submit registration</button>
+    </form>
+  </div>
+</div>
+
+<div class="overlay" id="addPlayerOverlay">
+  <div class="modal">
+    <button class="icon-btn modal-close" id="closeAddPlayerBtn"><i data-lucide="x" class="icon"></i></button>
+    <h3 id="addPlayerTitle">Add a player</h3>
+    <p style="color:var(--text-muted);font-size:13.5px;margin-bottom:20px">Competitor roster management.</p>
+    <form class="form-stack" id="addPlayerForm">
+      <div class="field"><label>Player name</label><input class="field-input" id="apName" type="text" required placeholder="In-game name"></div>
+      <div class="field"><label>Role</label><select class="field-select" id="apRole"><option>Duelist</option><option>Controller</option><option>Initiator</option><option>Sentinel</option><option>Substitute</option></select></div>
+      <button class="btn btn-primary btn-block" type="submit" id="addPlayerSubmit">Add to roster</button>
+    </form>
+  </div>
+</div>
+
+<div class="overlay" id="confirmOverlay">
+  <div class="modal" style="max-width:380px;text-align:center">
+    <div style="width:52px;height:52px;border-radius:50%;background:var(--danger-soft);color:var(--danger);display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><i data-lucide="alert-triangle" class="icon"></i></div>
+    <h3 id="confirmTitle">Are you sure?</h3>
+    <p id="confirmBody" style="color:var(--text-muted);font-size:13.5px;margin:8px 0 22px">This action cannot be undone.</p>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-secondary btn-block" id="confirmCancelBtn">Cancel</button>
+      <button class="btn btn-primary btn-block" id="confirmOkBtn">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="matchDetailOverlay">
+  <div class="modal">
+    <button class="icon-btn modal-close" id="closeMatchDetailBtn"><i data-lucide="x" class="icon"></i></button>
+    <h3 id="mdTitle">Match details</h3>
+    <div id="mdBody" style="margin-top:16px"></div>
+  </div>
+</div>
+
+<!-- Admin Modals -->
+<div class="overlay" id="adminPlayerModal">
+  <div class="modal modal-wide">
+    <button class="icon-btn modal-close" id="closeAdminPlayerModalBtn"><i data-lucide="x" class="icon"></i></button>
+    <h3 id="apmTitle">Player Profile &amp; Telemetry</h3>
+    <div id="apmBody" style="margin-top:16px"></div>
+  </div>
+</div>
+
+<div class="overlay" id="adminTeamModal">
+  <div class="modal modal-wide">
+    <button class="icon-btn modal-close" id="closeAdminTeamModalBtn"><i data-lucide="x" class="icon"></i></button>
+    <h3 id="atmTitle">Team Details</h3>
+    <div id="atmBody" style="margin-top:16px"></div>
+  </div>
+</div>
+
+<div class="overlay" id="adminTourneyModal">
+  <div class="modal modal-wide">
+    <button class="icon-btn modal-close" id="closeAdminTourneyModalBtn"><i data-lucide="x" class="icon"></i></button>
+    <h3>Edit Tournament Parameters</h3>
+    <form class="form-stack" id="adminTourneyForm" style="margin-top:16px">
+      <input type="hidden" id="atId">
+      <div class="field"><label>Tournament Name</label><input class="field-input" id="atName" required></div>
+      <div class="form-grid">
+        <div class="field"><label>Game</label><input class="field-input" id="atGame" required></div>
+        <div class="field"><label>Status</label><select class="field-select" id="atStatus"><option value="live">Live</option><option value="open">Registration Open</option><option value="upcoming">Upcoming</option><option value="finished">Finished</option></select></div>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>Prize Pool (₹)</label><input class="field-input" type="number" id="atPrize" required></div>
+        <div class="field"><label>Max Teams</label><input class="field-input" type="number" id="atTeams" required></div>
+      </div>
+      <button class="btn btn-primary btn-block" type="submit">Save Tournament Changes</button>
+    </form>
+  </div>
+</div>
+
+<div class="overlay" id="adminScoreModal">
+  <div class="modal">
+    <button class="icon-btn modal-close" id="closeAdminScoreModalBtn"><i data-lucide="x" class="icon"></i></button>
+    <h3>Official Match Result Entry</h3>
+    <form class="form-stack" id="adminScoreForm" style="margin-top:16px">
+      <input type="hidden" id="asmMatchNum">
+      <div style="text-align:center;margin-bottom:12px"><b id="asmMatchTitle" style="font-size:16px">Team A vs Team B</b></div>
+      <div class="form-grid">
+        <div class="field"><label id="asmLabelA">Team A Score</label><input class="field-input" type="number" id="asmScoreA" min="0" required></div>
+        <div class="field"><label id="asmLabelB">Team B Score</label><input class="field-input" type="number" id="asmScoreB" min="0" required></div>
+      </div>
+      <div class="field"><label>Match Status</label><select class="field-select" id="asmStatus"><option value="completed">Completed (Official)</option><option value="live">Live in Progress</option><option value="delayed">Delayed</option></select></div>
+      <button class="btn btn-primary btn-block" type="submit">Publish Official Result</button>
+    </form>
+  </div>
+</div>
+
+<div class="overlay" id="adminAdjustPointsModal">
+  <div class="modal">
+    <button class="icon-btn modal-close" id="closeAdminAdjustPointsBtn"><i data-lucide="x" class="icon"></i></button>
+    <h3>Adjust Leaderboard Points</h3>
+    <form class="form-stack" id="adminAdjustPointsForm" style="margin-top:16px">
+      <input type="hidden" id="adjTeamName">
+      <div class="field"><label>Selected Team</label><input class="field-input" id="adjDisplayTeam" readonly></div>
+      <div class="form-grid">
+        <div class="field"><label>Points Delta (+/-)</label><input class="field-input" type="number" id="adjPointsVal" required placeholder="e.g. 50 or -20"></div>
+        <div class="field"><label>Reason</label><input class="field-input" id="adjReason" required placeholder="Justification for audit trail"></div>
+      </div>
+      <button class="btn btn-primary btn-block" type="submit">Commit Point Adjustment</button>
+    </form>
+  </div>
+</div>
+
+<div class="overlay" id="adminReportModal">
+  <div class="modal modal-wide">
+    <button class="icon-btn modal-close" id="closeAdminReportModalBtn"><i data-lucide="x" class="icon"></i></button>
+    <h3 id="armTitle">Safety Ticket Review</h3>
+    <div id="armBody" style="margin-top:16px"></div>
+  </div>
+</div>
+
+<div class="overlay" id="adminRegDetailModal">
+  <div class="modal">
+    <button class="icon-btn modal-close" id="closeAdminRegDetailBtn"><i data-lucide="x" class="icon"></i></button>
+    <h3>Registration Dossier</h3>
+    <div id="ardBody" style="margin-top:16px"></div>
+  </div>
+</div>
+
+<script src="js/01-state.js"></script>
+<script src="js/02-router.js"></script>
+<script src="js/03-views-public.js"></script>
+<script src="js/04-organizer.js"></script>
+<script src="js/05-admin-auth.js"></script>
+<script src="js/admin/00-admin-shell.js"></script>
+<script src="js/admin/01-dashboard.js"></script>
+<script src="js/admin/02-players.js"></script>
+<script src="js/admin/03-teams.js"></script>
+<script src="js/admin/04-tournaments.js"></script>
+<script src="js/admin/05-registrations.js"></script>
+<script src="js/admin/06-matches.js"></script>
+<script src="js/admin/07-leaderboard.js"></script>
+<script src="js/admin/08-moderation.js"></script>
+<script src="js/admin/09-reports.js"></script>
+<script src="js/admin/10-announcements.js"></script>
+<script src="js/admin/11-analytics.js"></script>
+<script src="js/admin/12-auditlogs.js"></script>
+<script src="js/admin/13-settings.js"></script>
+<script src="js/06-shared-handlers.js"></script>
+<script src="js/07-main-init.js"></script>
+<script src="js/08-micro-interactions.js"></script>
+</body>
+</html>

@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Elite Arena — Sign In</title>
+
+<style>
+:root{
+  --black:#07080B;
+  --navy-2:#0F1836;
+  --gold:#C9A24D;
+  --gold-hi:#EFD08A;
+  --gold-dim:rgba(201,162,77,0.35);
+  --red-hi:#B8202E;
+  --text:#F1EDE6;
+  --text-muted:#9CA3B8;
+  --text-faint:#6B7186;
+  --glass:rgba(13,17,32,0.58);
+  --glass-border:rgba(201,162,77,0.28);
+  --radius:20px;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box;}
+
+html,body{height:100%;}
+
+body{
+  margin:0;
+  min-height:100%;
+  background:var(--black);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  overflow-x:hidden;
+}
+
+.orbitron{
+  font-family:'Orbitron',sans-serif;
+}
+
+/* ================= BACKGROUND ================= */
+
+.bg-layer{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+}
+
+.bg-base{
+  position:absolute;
+  inset:-5%;
+  background:
+    linear-gradient(160deg,
+      rgba(5,6,10,.78),
+      rgba(10,13,28,.58) 38%,
+      rgba(12,14,26,.68) 62%,
+      rgba(5,6,8,.86)),
+    radial-gradient(ellipse 60% 50% at 22% 28%,
+      rgba(122,22,32,.22),transparent 60%),
+    radial-gradient(ellipse 55% 45% at 82% 20%,
+      rgba(37,64,122,.28),transparent 60%),
+    radial-gradient(ellipse 70% 60% at 50% 90%,
+      rgba(201,162,77,.10),transparent 65%),
+    url('download.jpg') center/cover no-repeat,
+    linear-gradient(160deg,#05060A,#0A0D1C 38%,#0C0E1A 62%,#050608);
+
+  animation:driftBg 26s ease-in-out infinite alternate;
+}
+
+@keyframes driftBg{
+  0%{transform:scale(1);}
+  100%{transform:scale(1.06) translate(-1.2%,1%);}
+}
+
+.bg-grid{
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(201,162,77,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(201,162,77,.05) 1px,transparent 1px);
+  background-size:46px 46px;
+  opacity:.55;
+}
+
+.bg-scanline{
+  position:absolute;
+  left:0;
+  right:0;
+  height:140px;
+  background:linear-gradient(
+    180deg,
+    transparent,
+    rgba(148,180,255,.05),
+    transparent
+  );
+  animation:scan 9s linear infinite;
+}
+
+@keyframes scan{
+  0%{top:-160px;}
+  100%{top:110%;}
+}
+
+.bg-vignette{
+  position:absolute;
+  inset:0;
+  background:radial-gradient(
+    ellipse 75% 65% at 50% 42%,
+    transparent 40%,
+    rgba(3,4,8,.75) 100%
+  );
+}
+
+/* ================= LAYOUT ================= */
+
+.wrap{
+  position:relative;
+  z-index:2;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:48px 20px 28px;
+}
+
+.card{
+  width:100%;
+  max-width:428px;
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius);
+  padding:38px 34px 30px;
+
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+
+  box-shadow:
+    0 30px 70px -20px rgba(0,0,0,.65),
+    0 0 0 1px rgba(255,255,255,.02) inset,
+    0 0 80px -30px rgba(201,162,77,.18);
+
+  animation:cardIn .75s ease forwards;
+}
+
+@keyframes cardIn{
+  from{
+    opacity:0;
+    transform:translateY(22px) scale(.98);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+/* ================= BRAND ================= */
+
+.brand-row{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  margin-bottom:22px;
+}
+
+.brand-home-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:18px;
+  color:var(--gold-hi);
+  text-decoration:none;
+  font-size:12px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  font-weight:700;
+  opacity:.9;
+}
+
+.brand-home-link:hover{
+  opacity:1;
+}
+
+.brand-name{
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:.14em;
+  background:linear-gradient(
+    180deg,
+    var(--gold-hi),
+    var(--gold) 70%
+  );
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.brand-sub{
+  margin-top:6px;
+  font-size:10.5px;
+  letter-spacing:.24em;
+  color:var(--text-faint);
+  font-weight:600;
+}
+
+h1.heading{
+  font-size:22px;
+  font-weight:700;
+  margin:0 0 6px;
+  text-align:center;
+}
+
+p.sub{
+  margin:0 0 26px;
+  font-size:13.5px;
+  color:var(--text-muted);
+  text-align:center;
+}
+
+/* ================= FORM ================= */
+
+.field{
+  margin-bottom:16px;
+}
+
+.field label{
+  display:block;
+  font-size:11.5px;
+  font-weight:600;
+  color:var(--text-muted);
+  margin-bottom:7px;
+  text-transform:uppercase;
+}
+
+.input-shell{
+  display:flex;
+  align-items:center;
+  background:rgba(6,8,16,.55);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:12px;
+  transition:.25s;
+}
+
+.input-shell:focus-within{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(201,162,77,.14);
+}
+
+.input-shell .ic-left{
+  padding-left:14px;
+  color:var(--text-faint);
+  display:flex;
+}
+
+.input-shell input{
+  flex:1;
+  background:transparent;
+  border:none;
+  outline:none;
+  color:var(--text);
+  font-size:14.5px;
+  padding:13px 12px;
+}
+
+.input-shell input::placeholder{
+  color:var(--text-faint);
+}
+
+.eye-btn{
+  background:none;
+  border:none;
+  color:var(--text-faint);
+  padding:0 14px;
+  cursor:pointer;
+}
+
+.eye-btn:hover{
+  color:var(--gold);
+}
+
+/* ================= REMEMBER ================= */
+
+.row-between{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:4px 0 22px;
+}
+
+.remember{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+}
+
+.remember input{
+  display:none;
+}
+
+.checkbox{
+  width:17px;
+  height:17px;
+  border-radius:5px;
+  border:1.5px solid rgba(255,255,255,.22);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.remember input:checked + .checkbox{
+  background:var(--gold);
+  border-color:var(--gold);
+}
+
+.remember span:last-child{
+  font-size:13px;
+  color:var(--text-muted);
+}
+
+.forgot{
+  font-size:13px;
+  color:var(--gold);
+  text-decoration:none;
+}
+
+/* ================= LOGIN BUTTON ================= */
+
+.btn-login{
+  width:100%;
+  border:none;
+  border-radius:12px;
+  padding:15px;
+  cursor:pointer;
+
+  font-family:'Orbitron',sans-serif;
+  font-weight:700;
+  font-size:14px;
+  letter-spacing:.08em;
+
+  color:#1B1404;
+
+  background:linear-gradient(
+    135deg,
+    var(--gold-hi),
+    var(--gold) 55%,
+    #9C7935
+  );
+
+  box-shadow:0 10px 28px -10px rgba(201,162,77,.55);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+
+  transition:.2s;
+}
+
+.btn-login:hover{
+  transform:translateY(-2px);
+  box-shadow:0 16px 34px -10px rgba(201,162,77,.75);
+}
+
+/* ================= NEW ADMIN / SPECTATOR BUTTONS ================= */
+
+.role-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+
+.role-btn{
+  padding:12px 8px;
+  border-radius:11px;
+
+  font-family:'Orbitron',sans-serif;
+  font-size:10.5px;
+  font-weight:700;
+  letter-spacing:.06em;
+
+  cursor:pointer;
+
+  background:rgba(8,12,28,.72);
+  border:1px solid rgba(201,162,77,.30);
+  color:var(--text-muted);
+
+  transition:
+    transform .2s ease,
+    color .2s ease,
+    border-color .2s ease,
+    background .2s ease,
+    box-shadow .2s ease;
+}
+
+.role-btn:hover{
+  transform:translateY(-2px);
+  color:var(--gold-hi);
+  border-color:var(--gold);
+  background:rgba(201,162,77,.08);
+  box-shadow:0 8px 22px -10px rgba(201,162,77,.55);
+}
+
+.admin-btn{
+  border-color:rgba(184,32,46,.45);
+}
+
+.admin-btn:hover{
+  border-color:var(--red-hi);
+  color:#F08B91;
+  background:rgba(184,32,46,.10);
+  box-shadow:0 8px 22px -10px rgba(184,32,46,.5);
+}
+
+.spectator-btn{
+  border-color:rgba(37,64,122,.55);
+}
+
+.spectator-btn:hover{
+  border-color:#5275C5;
+  color:#AFC5FF;
+  background:rgba(37,64,122,.15);
+  box-shadow:0 8px 22px -10px rgba(37,64,122,.6);
+}
+
+/* ================= CREATE ACCOUNT ================= */
+
+.create-line{
+  text-align:center;
+  font-size:13px;
+  color:var(--text-muted);
+  margin-top:18px;
+}
+
+.create-line a{
+  color:var(--gold);
+  font-weight:700;
+  text-decoration:none;
+}
+
+.create-account-panel{
+  display:none;
+  margin-top:18px;
+  padding:18px 16px 16px;
+  border:1px solid var(--glass-border);
+  border-radius:16px;
+  background:rgba(6,10,19,0.58);
+  box-shadow:0 16px 32px -22px rgba(0,0,0,0.8);
+}
+
+.create-account-panel.visible{
+  display:block;
+}
+
+.create-account-panel h2{
+  margin:0 0 14px;
+  font-size:16px;
+  color:var(--gold-hi);
+  text-align:center;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+
+.create-account-form{
+  display:grid;
+  gap:12px;
+}
+
+.create-account-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.create-field label{
+  display:block;
+  margin-bottom:7px;
+  color:var(--text-muted);
+  font-size:11px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.create-input{
+  width:100%;
+  background:rgba(7,10,18,.7);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:10px;
+  color:var(--text);
+  padding:12px 13px;
+  font-size:13px;
+  outline:none;
+}
+
+.create-input:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(201,162,77,.12);
+}
+
+.create-check{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  color:var(--text-muted);
+  font-size:12px;
+  line-height:1.5;
+}
+
+.create-check input{
+  margin-top:2px;
+  accent-color:var(--gold);
+}
+
+.create-account-submit{
+  width:100%;
+  border:none;
+  border-radius:12px;
+  padding:13px 16px;
+  cursor:pointer;
+  font-family:'Orbitron',sans-serif;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.08em;
+  color:#1b1404;
+  background:linear-gradient(135deg,var(--gold-hi),var(--gold) 55%,#9c7935);
+  box-shadow:0 10px 24px -10px rgba(201,162,77,.65);
+}
+
+.create-account-submit:hover{
+  transform:translateY(-1px);
+}
+
+/* ================= DIVIDER ================= */
+
+.divider{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:24px 0 18px;
+}
+
+.divider .line{
+  flex:1;
+  height:1px;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    var(--gold-dim),
+    transparent
+  );
+}
+
+.divider span{
+  font-size:10.5px;
+  letter-spacing:.18em;
+  color:var(--text-faint);
+}
+
+/* ================= SOCIAL ================= */
+
+.social-row{
+  display:flex;
+  gap:10px;
+}
+
+.social-btn{
+  flex:1;
+  padding:11px 8px;
+  border-radius:11px;
+
+  border:1px solid rgba(255,255,255,.09);
+  background:rgba(255,255,255,.03);
+
+  color:var(--text-muted);
+  font-size:12.5px;
+  font-weight:600;
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.social-btn:hover{
+  border-color:var(--gold-dim);
+  color:var(--text);
+  background:rgba(201,162,77,.07);
+}
+
+/* ================= SECURE ================= */
+
+.secure-row{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  margin-top:26px;
+  font-size:11px;
+  color:var(--text-faint);
+  letter-spacing:.03em;
+}
+
+.encrypt-note{
+  text-align:center;
+  font-size:10.5px;
+  color:var(--text-faint);
+  margin-top:4px;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  padding:18px 20px 26px;
+}
+
+footer p{
+  margin:0 0 8px;
+  font-size:11.5px;
+  color:var(--text-faint);
+}
+
+footer .links{
+  display:flex;
+  gap:14px;
+  justify-content:center;
+}
+
+footer a{
+  font-size:11.5px;
+  color:var(--text-faint);
+  text-decoration:none;
+}
+
+footer a:hover{
+  color:var(--gold);
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+  position:fixed;
+  top:22px;
+  left:50%;
+  transform:translateX(-50%) translateY(-16px);
+
+  background:var(--navy-2);
+  border:1px solid var(--glass-border);
+
+  color:var(--text);
+
+  padding:12px 20px;
+  border-radius:11px;
+
+  font-size:13px;
+
+  opacity:0;
+  pointer-events:none;
+
+  transition:.3s;
+
+  z-index:50;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:480px){
+
+  .card{
+    padding:30px 22px 24px;
+    border-radius:16px;
+  }
+
+  .brand-name{
+    font-size:19px;
+  }
+
+  .role-buttons{
+    grid-template-columns:1fr;
+  }
+
+  .social-row{
+    flex-direction:column;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= BACKGROUND ================= -->
+
+<div class="bg-layer">
+
+  <div class="bg-base"></div>
+  <div class="bg-grid"></div>
+  <div class="bg-scanline"></div>
+  <div class="bg-vignette"></div>
+
+</div>
+
+<!-- ================= LOGIN ================= -->
+
+<div class="wrap">
+
+  <div class="card">
+
+    <div class="brand-row">
+
+      <a href="index.html" class="brand-home-link">← Back to Arena Elite</a>
+
+      <div class="brand-name orbitron">
+        ELITE ARENA
+      </div>
+
+      <div class="brand-sub">
+        COMPETE · CONQUER · CHAMPION
+      </div>
+
+    </div>
+
+    <h1 class="heading">
+      Welcome Back
+    </h1>
+
+    <p class="sub">
+      Sign in to continue your gaming journey.
+    </p>
+
+
+    <form id="loginForm">
+
+      <!-- USERNAME -->
+
+      <div class="field">
+
+        <label for="userInput">
+          Username / Email
+        </label>
+
+        <div class="input-shell">
+
+          <span class="ic-left">👤</span>
+
+          <input
+            type="text"
+            id="userInput"
+            placeholder="you@example.com"
+            autocomplete="username"
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- PASSWORD -->
+
+      <div class="field">
+
+        <label for="passInput">
+          Password
+        </label>
+
+        <div class="input-shell">
+
+          <span class="ic-left">🔒</span>
+
+          <input
+            type="password"
+            id="passInput"
+            placeholder="••••••••"
+            autocomplete="current-password"
+          >
+
+          <button
+            type="button"
+            class="eye-btn"
+            id="eyeBtn"
+          >
+            👁
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- REMEMBER / FORGOT -->
+
+      <div class="row-between">
+
+        <label class="remember">
+
+          <input
+            type="checkbox"
+            id="rememberChk"
+          >
+
+          <span class="checkbox">
+            ✓
+          </span>
+
+          <span>
+            Remember me
+          </span>
+
+        </label>
+
+        <a href="#" class="forgot" id="forgotLink">
+          Forgot Password?
+        </a>
+
+      </div>
+
+
+      <!-- MAIN LOGIN -->
+
+      <button
+        type="submit"
+        class="btn-login"
+      >
+
+        <span>
+          ➜
+        </span>
+
+        <span>
+          LOGIN TO ARENA
+        </span>
+
+      </button>
+
+
+      <!-- ================= ADMIN / SPECTATOR ================= -->
+
+      <div class="role-buttons">
+
+        <button
+          type="button"
+          class="role-btn admin-btn"
+          id="adminBtn"
+        >
+          🛡 ADMIN PORTAL
+        </button>
+
+        <button
+          type="button"
+          class="role-btn spectator-btn"
+          id="spectatorBtn"
+        >
+          👁 SPECTATOR MODE
+        </button>
+
+      </div>
+
+
+      <!-- CREATE ACCOUNT -->
+
+      <p class="create-line">
+
+        Don't have an account?
+
+        <a href="#" id="showCreateAccount">
+          Create Account
+        </a>
+
+      </p>
+
+    </form>
+
+    <div class="create-account-panel" id="createAccountPanel">
+      <h2>Create Your Account</h2>
+
+      <form id="registerForm" class="create-account-form" novalidate>
+        <div class="create-account-grid">
+          <div class="create-field">
+            <label for="first">First Name</label>
+            <input id="first" class="create-input" type="text" placeholder="First name" autocomplete="given-name">
+          </div>
+
+          <div class="create-field">
+            <label for="last">Last Name</label>
+            <input id="last" class="create-input" type="text" placeholder="Last name" autocomplete="family-name">
+          </div>
+        </div>
+
+        <div class="create-field">
+          <label for="username">Username</label>
+          <input id="username" class="create-input" type="text" placeholder="Choose a gamer username" autocomplete="username">
+        </div>
+
+        <div class="create-field">
+          <label for="email">Email Address</label>
+          <input id="email" class="create-input" type="email" placeholder="you@example.com" autocomplete="email">
+        </div>
+
+        <div class="create-account-grid">
+          <div class="create-field">
+            <label for="password">Password</label>
+            <input id="password" class="create-input" type="password" placeholder="Min. 6 characters" autocomplete="new-password">
+          </div>
+
+          <div class="create-field">
+            <label for="confirm">Confirm</label>
+            <input id="confirm" class="create-input" type="password" placeholder="Repeat password" autocomplete="new-password">
+          </div>
+        </div>
+
+        <label class="create-check">
+          <input id="terms" type="checkbox">
+          <span>I agree to the <strong style="color: var(--gold);">Terms of Service</strong> and <strong style="color: var(--gold);">Privacy Policy</strong>.</span>
+        </label>
+
+        <button type="submit" class="create-account-submit">Create Account</button>
+      </form>
+    </div>
+
+
+    <!-- DIVIDER -->
+
+    <div class="divider">
+
+      <div class="line"></div>
+
+      <span>
+        OR CONTINUE WITH
+      </span>
+
+      <div class="line"></div>
+
+    </div>
+
+
+    <!-- SOCIAL LOGIN -->
+
+    <div class="social-row">
+
+      <button
+        type="button"
+        class="social-btn"
+        data-provider="Google"
+      >
+        Google
+      </button>
+
+      <button
+        type="button"
+        class="social-btn"
+        data-provider="Discord"
+      >
+        Discord
+      </button>
+
+      <button
+        type="button"
+        class="social-btn"
+        data-provider="Steam"
+      >
+        Steam
+      </button>
+
+    </div>
+
+
+    <!-- SECURITY -->
+
+    <div class="secure-row">
+      🔒
+      <span>
+        SECURE LOGIN
+      </span>
+    </div>
+
+    <p class="encrypt-note">
+      256-bit encrypted connection
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+  <p>
+    © 2026 Elite Arena. All Rights Reserved.
+  </p>
+
+  <div class="links">
+
+    <a href="#">
+      Privacy Policy
+    </a>
+
+    <span>|</span>
+
+    <a href="#">
+      Terms of Service
+    </a>
+
+    <span>|</span>
+
+    <a href="#">
+      Support
+    </a>
+
+  </div>
+
+</footer>
+
+
+<!-- TOAST -->
+
+<div class="toast" id="toast">
+  <span id="toastMsg">
+    Welcome
+  </span>
+</div>
+
+
+<script>
+
+/* ================= LOGIN ================= */
+
+const loginForm =
+  document.getElementById("loginForm");
+
+const userInput =
+  document.getElementById("userInput");
+
+const passInput =
+  document.getElementById("passInput");
+
+const rememberChk =
+  document.getElementById("rememberChk");
+
+const toast =
+  document.getElementById("toast");
+
+const toastMsg =
+  document.getElementById("toastMsg");
+
+
+/* ================= TOAST ================= */
+
+function showToast(message){
+
+  toastMsg.textContent = message;
+
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000);
+}
+
+
+/* ================= PASSWORD SHOW / HIDE ================= */
+
+document
+  .getElementById("eyeBtn")
+  .addEventListener("click", function(){
+
+    if(passInput.type === "password"){
+
+      passInput.type = "text";
+
+      this.textContent = "🙈";
+
+    }else{
+
+      passInput.type = "password";
+
+      this.textContent = "👁";
+
+    }
+
+  });
+
+
+/* ================= REMEMBER USER ================= */
+
+try{
+
+  const savedUser =
+    localStorage.getItem(
+      "eliteArena.rememberedUser"
+    );
+
+  if(savedUser){
+
+    userInput.value = savedUser;
+
+    rememberChk.checked = true;
+
+  }
+
+}catch(error){}
+
+
+/* ================= NORMAL LOGIN ================= */
+
+loginForm.addEventListener(
+  "submit",
+  function(event){
+
+    event.preventDefault();
+
+    const username =
+      userInput.value.trim();
+
+    const password =
+      passInput.value;
+
+    if(!username){
+
+      showToast(
+        "Please enter username or email."
+      );
+
+      return;
+    }
+
+    if(password.length < 6){
+
+      showToast(
+        "Password must be at least 6 characters."
+      );
+
+      return;
+    }
+
+    let savedAccount = null;
+
+    try{
+      const storedAccount =
+        localStorage.getItem("eliteArena.account");
+
+      if(storedAccount){
+        savedAccount = JSON.parse(storedAccount);
+      }
+    }catch(error){}
+
+    const normalizedUser =
+      username.toLowerCase();
+
+    const hasValidSavedAccount =
+      savedAccount &&
+      (
+        normalizedUser === String(savedAccount.username || "").toLowerCase() ||
+        normalizedUser === String(savedAccount.email || "").toLowerCase()
+      ) &&
+      password === savedAccount.password;
+
+    if(savedAccount && !hasValidSavedAccount){
+      showToast(
+        "Incorrect username/email or password."
+      );
+      return;
+    }
+
+    /* Save username */
+
+    try{
+
+      if(rememberChk.checked){
+
+        localStorage.setItem(
+          "eliteArena.rememberedUser",
+          username
+        );
+
+      }else{
+
+        localStorage.removeItem(
+          "eliteArena.rememberedUser"
+        );
+
+      }
+
+      localStorage.setItem(
+        "eliteArena.currentUser",
+        savedAccount ? (savedAccount.username || username) : username
+      );
+
+      localStorage.setItem(
+        "eliteArena.currentUserRole",
+        savedAccount ? "player" : "guest"
+      );
+
+    }catch(error){}
+
+
+    showToast(
+      savedAccount ?
+        "Access granted. Welcome back!" :
+        "Access granted. Welcome back!"
+    );
+
+
+    setTimeout(() => {
+
+      window.location.href =
+        "index.html";
+
+    },1000);
+
+  }
+);
+
+
+/* ================= ADMIN BUTTON ================= */
+
+document
+  .getElementById("adminBtn")
+  .addEventListener("click", function(){
+
+    showToast(
+      "Opening Admin Portal..."
+    );
+
+    setTimeout(() => {
+
+      window.location.href =
+        "index.html?view=admin";
+
+    },700);
+
+  });
+
+
+/* ================= SPECTATOR BUTTON ================= */
+
+document
+  .getElementById("spectatorBtn")
+  .addEventListener("click", function(){
+
+    showToast(
+      "Opening Spectator Mode..."
+    );
+
+    setTimeout(() => {
+
+      window.location.href =
+        "spectator.html";
+
+    },700);
+
+  });
+
+
+/* ================= CREATE ACCOUNT TOGGLE ================= */
+
+const showCreateAccountLink =
+  document.getElementById("showCreateAccount");
+
+const createAccountPanel =
+  document.getElementById("createAccountPanel");
+
+if (showCreateAccountLink && createAccountPanel) {
+  showCreateAccountLink.addEventListener("click", function(event){
+    event.preventDefault();
+    createAccountPanel.classList.toggle("visible");
+    showCreateAccountLink.textContent =
+      createAccountPanel.classList.contains("visible") ?
+      "Hide Form" :
+      "Create Account";
+  });
+}
+
+/* ================= CREATE ACCOUNT SUBMIT ================= */
+
+const registerForm =
+  document.getElementById("registerForm");
+
+if (registerForm) {
+  registerForm.addEventListener("submit", function(event){
+    event.preventDefault();
+
+    const first =
+      document.getElementById("first").value.trim();
+
+    const last =
+      document.getElementById("last").value.trim();
+
+    const username =
+      document.getElementById("username").value.trim();
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    const password =
+      document.getElementById("password").value;
+
+    const confirmPassword =
+      document.getElementById("confirm").value;
+
+    const terms =
+      document.getElementById("terms").checked;
+
+    if(!first || !last || !username || !email || !password || !confirmPassword){
+      showToast("Please complete all fields.");
+      return;
+    }
+
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      showToast("Please enter a valid email address.");
+      return;
+    }
+
+    if(password.length < 6){
+      showToast("Password must be at least 6 characters.");
+      return;
+    }
+
+    if(password !== confirmPassword){
+      showToast("Passwords do not match.");
+      return;
+    }
+
+    if(!terms){
+      showToast("Please accept the Terms and Privacy Policy.");
+      return;
+    }
+
+    const account = {
+      first,
+      last,
+      username,
+      email,
+      password
+    };
+
+    try{
+      localStorage.setItem("eliteArena.account", JSON.stringify(account));
+      localStorage.setItem("eliteArena.currentUser", username);
+      localStorage.setItem("eliteArena.currentUserRole", "player");
+    }catch(error){}
+
+    showToast("Account created successfully. Welcome to Elite Arena!");
+
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 1500);
+
+  });
+}
+
+/* ================= FORGOT PASSWORD ================= */
+
+document
+  .getElementById("forgotLink")
+  .addEventListener("click", function(event){
+
+    event.preventDefault();
+
+    showToast(
+      "Password reset link sent. (Demo)"
+    );
+
+  });
+
+
+/* ================= SOCIAL LOGIN ================= */
+
+document
+  .querySelectorAll(".social-btn")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      function(){
+
+        showToast(
+          this.dataset.provider +
+          " sign-in connected. (Demo)"
+        );
+
+      }
+    );
+
+  });
+
+</script>
+
+</body>
+</html>

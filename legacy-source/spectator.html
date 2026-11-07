@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#060A12">
+<title>Arena Elite — Spectator Portal</title>
+<meta name="description" content="Arena Elite spectator portal for live matches, tournaments, leaderboards and esports updates.">
+<link rel="stylesheet" href="spectator.css">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="ambient ambient-one"></div>
+<div class="ambient ambient-two"></div>
+
+<div id="toast" class="toast"></div>
+
+<header class="topbar">
+  <a class="brand" href="spectator.html" aria-label="Arena Elite Spectator Home">
+    <span class="brand-mark">AE</span>
+    <span class="brand-text">ARENA <b>ELITE</b><small>SPECTATOR PORTAL</small></span>
+  </a>
+
+  <button class="mobile-menu" id="mobileMenu" aria-label="Open menu"><i data-lucide="menu"></i></button>
+
+  <nav id="mainNav">
+    <button class="nav-link active" data-view="home">Home</button>
+    <button class="nav-link" data-view="live">Live Matches</button>
+    <button class="nav-link" data-view="tournaments">Tournaments</button>
+    <button class="nav-link" data-view="leaderboard">Leaderboards</button>
+    <button class="nav-link" data-view="teams">Teams</button>
+    <button class="nav-link" data-view="announcements">Announcements</button>
+    <button class="nav-link" data-view="schedule">Schedule</button>
+    <button class="nav-link" data-view="profile">Profile</button>
+  </nav>
+
+  <div class="top-actions">
+    <button class="icon-button" id="notifyBtn" title="Notifications"><i data-lucide="bell"></i><span class="notify-dot"></span></button>
+    <button class="spectator-badge" id="profileQuick">SB</button>
+  </div>
+</header>
+
+<main class="container">
+  <!-- HOME -->
+  <section class="view active" id="view-home">
+    <div class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow"><i data-lucide="radio"></i> SPECTATOR ACCESS · SEASON 6</span>
+        <h1>Watch the arena.<br><span>Follow every moment.</span></h1>
+        <p>Welcome to the Arena Elite spectator experience. Track live matches, explore tournaments, follow teams and stay connected with every result.</p>
+        <div class="hero-actions">
+          <button class="btn primary" data-go="live"><i data-lucide="play"></i> Watch Live</button>
+          <button class="btn secondary" data-go="tournaments"><i data-lucide="trophy"></i> Explore Tournaments</button>
+        </div>
+      </div>
+      <div class="hero-panel">
+        <div class="live-orb"><span></span><strong>LIVE</strong></div>
+        <div>
+          <small>ACTIVE VIEWERS</small>
+          <b id="heroViewers">18,426</b>
+        </div>
+        <div class="hero-mini-row"><span>Live matches</span><strong id="heroLiveCount">2</strong></div>
+        <div class="hero-mini-row"><span>Today's matches</span><strong>8</strong></div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <article class="stat-card"><span>LIVE NOW</span><strong id="statLive">2</strong><small>matches broadcasting</small></article>
+      <article class="stat-card"><span>TOURNAMENTS</span><strong>06</strong><small>events this season</small></article>
+      <article class="stat-card"><span>TEAMS</span><strong>24</strong><small>active competitive rosters</small></article>
+      <article class="stat-card"><span>VIEWERS</span><strong id="statViewers">18.4K</strong><small>watching across Arena Elite</small></article>
+    </div>
+
+    <div class="section-heading">
+      <div><span class="eyebrow">ON AIR</span><h2>Currently Live</h2><p>Jump into the matches happening right now.</p></div>
+      <button class="text-button" data-go="live">View all <i data-lucide="arrow-right"></i></button>
+    </div>
+    <div class="card-grid" id="homeLiveGrid"></div>
+
+    <div class="section-heading">
+      <div><span class="eyebrow">FEATURED</span><h2>Featured Tournament</h2><p>The headline event currently drawing the biggest audience.</p></div>
+    </div>
+    <article class="featured-tournament" id="featuredTournament"></article>
+
+    <div class="two-column">
+      <div>
+        <div class="section-heading compact"><div><span class="eyebrow">UP NEXT</span><h2>Upcoming Matches</h2></div><button class="text-button" data-go="schedule">Schedule <i data-lucide="arrow-right"></i></button></div>
+        <div class="list-card" id="homeUpcoming"></div>
+      </div>
+      <div>
+        <div class="section-heading compact"><div><span class="eyebrow">LATEST</span><h2>Live Activity</h2></div></div>
+        <div class="activity-card" id="activityFeed"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE -->
+  <section class="view" id="view-live">
+    <div class="page-header"><div><span class="eyebrow">ON AIR NOW</span><h1>Live Matches</h1><p>Watch the competition as it happens.</p></div><span class="live-pill"><i></i> LIVE BROADCAST</span></div>
+    <div class="filter-toolbar">
+      <div class="search-box"><i data-lucide="search"></i><input id="liveSearch" placeholder="Search live matches, teams or games"></div>
+      <select id="liveGameFilter"><option value="all">All Games</option><option>Valorant</option><option>CS2</option><option>PUBG</option><option>Free Fire</option></select>
+    </div>
+    <div class="live-grid" id="liveGrid"></div>
+  </section>
+
+  <!-- TOURNAMENTS -->
+  <section class="view" id="view-tournaments">
+    <div class="page-header"><div><span class="eyebrow">EVENT DISCOVERY</span><h1>Tournaments</h1><p>Explore live, upcoming and completed Arena Elite events.</p></div></div>
+    <div class="filter-toolbar">
+      <div class="search-box"><i data-lucide="search"></i><input id="tournamentSearch" placeholder="Search tournaments or games"></div>
+      <div class="chips" id="tournamentStatusChips">
+        <button class="chip active" data-status="all">All</button><button class="chip" data-status="live">Live</button><button class="chip" data-status="upcoming">Upcoming</button><button class="chip" data-status="completed">Completed</button>
+      </div>
+    </div>
+    <div class="tournament-grid" id="tournamentGrid"></div>
+  </section>
+
+  <!-- LEADERBOARD -->
+  <section class="view" id="view-leaderboard">
+    <div class="page-header"><div><span class="eyebrow">COMPETITIVE RANKINGS</span><h1>Leaderboards</h1><p>Track the teams leading the season.</p></div></div>
+    <div class="podium" id="podium"></div>
+    <div class="table-card">
+      <div class="table-head"><span>Rank</span><span>Team</span><span>Matches</span><span>Wins</span><span>Points</span><span>Win Rate</span></div>
+      <div id="leaderboardRows"></div>
+    </div>
+  </section>
+
+  <!-- TEAMS -->
+  <section class="view" id="view-teams">
+    <div class="page-header"><div><span class="eyebrow">COMPETITIVE ROSTERS</span><h1>Teams</h1><p>Follow the teams competing across Arena Elite.</p></div></div>
+    <div class="filter-toolbar">
+      <div class="search-box"><i data-lucide="search"></i><input id="teamSearch" placeholder="Search teams"></div>
+      <select id="teamGameFilter"><option value="all">All Games</option><option>Valorant</option><option>CS2</option><option>PUBG</option><option>Free Fire</option></select>
+    </div>
+    <div class="team-grid" id="teamGrid"></div>
+  </section>
+
+  <!-- ANNOUNCEMENTS -->
+  <section class="view" id="view-announcements">
+    <div class="page-header"><div><span class="eyebrow">ARENA NEWS</span><h1>Announcements</h1><p>Important tournament and match updates for spectators.</p></div></div>
+    <div class="announcement-list" id="announcementList"></div>
+  </section>
+
+  <!-- SCHEDULE -->
+  <section class="view" id="view-schedule">
+    <div class="page-header"><div><span class="eyebrow">MATCH CALENDAR</span><h1>Schedule</h1><p>Find today's matches and what is coming next.</p></div></div>
+    <div class="schedule-tabs"><button class="schedule-tab active" data-day="today">Today</button><button class="schedule-tab" data-day="tomorrow">Tomorrow</button><button class="schedule-tab" data-day="week">This Week</button></div>
+    <div class="schedule-list" id="scheduleList"></div>
+  </section>
+
+  <!-- PROFILE -->
+  <section class="view" id="view-profile">
+    <div class="page-header"><div><span class="eyebrow">SPECTATOR ACCOUNT</span><h1>Profile</h1><p>Manage your viewing preferences and followed content.</p></div></div>
+    <div class="profile-grid">
+      <article class="profile-card">
+        <div class="profile-top"><div class="profile-avatar" id="profileAvatar">SB</div><div><h2 id="profileName">Spectator</h2><p id="profileEmail">spectator@arenaelite.gg</p><span class="role-label">SPECTATOR · VIEW ONLY</span></div></div>
+        <div class="profile-fields">
+          <label>Display Name<input id="nameInput" value="Spectator"></label>
+          <label>Email<input id="emailInput" value="spectator@arenaelite.gg"></label>
+        </div>
+        <button class="btn primary full" id="saveProfile"><i data-lucide="save"></i> Save Preferences</button>
+      </article>
+      <article class="profile-card">
+        <h2>Following</h2>
+        <p class="muted">Your saved spectator interests.</p>
+        <div class="preference-row"><span>Favorite Teams</span><strong id="favoriteTeamsCount">0</strong></div>
+        <div class="preference-row"><span>Favorite Tournaments</span><strong id="favoriteTournamentsCount">0</strong></div>
+        <div class="preference-row"><span>Recently Watched</span><strong id="recentWatchedCount">0</strong></div>
+        <label class="toggle-row"><span>Match notifications<input type="checkbox" id="notificationToggle" checked><i></i></span></label>
+      </article>
+      <article class="profile-card wide">
+        <h2>Recently Watched Matches</h2>
+        <div id="recentList" class="recent-list"></div>
+      </article>
+    </div>
+    <button class="logout-button" id="logoutBtn"><i data-lucide="log-out"></i> Exit Spectator Portal</button>
+  </section>
+</main>
+
+<footer><span>© 2026 Arena Elite</span><span>·</span><span>Spectator Portal</span><span>·</span><span>View-only experience</span></footer>
+
+<script src="spectator.js"></script>
+<script>lucide.createIcons();</script>
+</body>
+</html>

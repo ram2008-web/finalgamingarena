@@ -1,0 +1,71 @@
+.organizer-auth-link{display:block;margin:20px auto 0}
+.organizer-shell .content{padding-top:32px}
+.organizer-sidebar{background:rgba(7,12,22,.55)}
+.organizer-logout{margin-top:24px;border-top:1px solid var(--line);border-radius:0;padding-top:18px}
+.organizer-stats{grid-template-columns:repeat(4,minmax(0,1fr));margin:12px 0 34px}
+.organizer-list-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+.organizer-list-row:last-of-type{border-bottom:0}
+.organizer-list-row b,.organizer-list-row small{display:block}
+.organizer-list-row b{font-size:12px}
+.organizer-list-row small{color:var(--muted);font-size:10px;margin-top:5px}
+.organizer-quick-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:20px}
+.organizer-quick-nav button{display:flex;flex-direction:column;align-items:flex-start;gap:12px;text-align:left;color:#fff}
+.organizer-quick-nav svg{color:var(--gold);width:18px}
+.organizer-quick-nav b{font-size:12px}
+.organizer-quick-nav span{font-size:10px;color:var(--muted)}
+.organizer-tournament-details{padding:10px 4px;color:#d9e0ec;font-size:12px}
+.organizer-tournament-details p{color:var(--muted);white-space:pre-wrap;line-height:1.55}
+.organizer-tournament-details small{color:var(--muted)}
+.organizer-form{margin-bottom:20px}
+.organizer-form h2{margin-bottom:18px}
+.organizer-form label,.organizer-toolbar label{display:flex;flex-direction:column;gap:7px;color:#c5cfdd;font-size:11px;font-weight:700}
+.organizer-form input,.organizer-form select,.organizer-form textarea,.organizer-toolbar select,
+.leaderboard-select select,.row-actions select,.organizer-shell td select{
+  min-width:0;border:1px solid var(--line);border-radius:8px;background:#0b1220;color:#f4f6fa;padding:9px 10px;font-size:11px
+}
+.organizer-form input,.organizer-form select,.organizer-form textarea{width:100%;padding:11px 12px;font-size:12px}
+.organizer-form textarea{resize:vertical;line-height:1.55}
+.organizer-form input[readonly]{color:var(--muted)}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.span-two{grid-column:span 2}
+.form-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+.organizer-toolbar select{width:auto;min-width:145px}
+.organizer-form .muted{line-height:1.6}
+.organizer-form .btn:disabled,.row-actions button:disabled{opacity:.45;cursor:not-allowed}
+.score-entry{display:flex;align-items:center;gap:6px;min-width:235px}
+.score-entry input{width:55px;min-width:0;padding:8px;border:1px solid var(--line);border-radius:7px;background:#0b1220;color:#fff}
+.score-entry .btn{padding:8px}
+.profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:16px}
+.profile-grid .organizer-form{display:grid;align-content:start;gap:14px}
+.leaderboard-select{max-width:380px;margin-bottom:18px}
+.team-edit{display:grid;gap:6px;min-width:150px}
+.team-edit input{width:100%;padding:7px;border:1px solid var(--line);border-radius:6px;background:#0b1220;color:#fff;font-size:11px}
+.team-edit .btn{padding:6px}
+.organizer-report-activity{margin-top:20px}
+.toast{position:fixed;right:24px;bottom:24px;z-index:10;max-width:min(420px,calc(100vw - 32px));padding:13px 17px;border:1px solid rgba(215,174,88,.35);border-radius:10px;background:#111b2b;color:#f3e5bf;font-size:12px;box-shadow:0 12px 40px #0008}
+
+@media(max-width:1000px){
+  .organizer-quick-nav{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:900px){
+  .organizer-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .organizer-shell .dashboard-grid,.profile-grid{grid-template-columns:1fr}
+}
+@media(max-width:680px){
+  .organizer-shell .topbar{padding:0 16px}
+  .organizer-shell .layout{display:block}
+  .organizer-sidebar{position:static;height:auto;min-height:0;border-right:0;border-bottom:1px solid var(--line);padding:12px;display:flex;gap:5px;overflow-x:auto}
+  .organizer-sidebar .side-label{display:none}
+  .organizer-sidebar .nav-item{width:auto;flex:0 0 auto;white-space:nowrap;margin:0;padding:10px}
+  .organizer-logout{margin:0;border-top:0;padding-top:10px}
+  .organizer-shell .content{padding:24px 14px 52px}
+  .organizer-shell .module-head{align-items:flex-start;flex-direction:column}
+  .organizer-toolbar{align-items:stretch;flex-direction:column}
+  .organizer-toolbar select{width:100%}
+  .form-grid{grid-template-columns:1fr}
+  .span-two{grid-column:auto}
+  .form-actions{justify-content:stretch;flex-direction:column}
+  .form-actions .btn{justify-content:center}
+  .organizer-shell .user-chip{display:none}
+  .organizer-quick-nav{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
